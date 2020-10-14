@@ -28,7 +28,12 @@ public class Movement_controller : MonoBehaviour
     [Header("Ground settings")]
     [SerializeField]private LayerMask _whatIsGround;
     [SerializeField]private float _radius;
-    
+
+    [Header("Casting")]
+    [SerializeField] private GameObject _fireBall;
+    [SerializeField] private Transform _firePoint;
+    [SerializeField] private float _fireBallSpeed;
+    private bool _isCasting;
     void Start()
     {
         _playerRD = GetComponent<Rigidbody2D>();
@@ -84,5 +89,28 @@ public class Movement_controller : MonoBehaviour
         _playerAnimator.SetBool("Jump", !_grounded);
         _playerAnimator.SetBool("Crouch", !_headCollider.enabled);
         #endregion
+    }
+
+    public void StartCasting()
+    {
+        if (_isCasting)
+            return;
+
+        _isCasting = true;
+        _playerAnimator.SetBool("Casting", true);
+    }
+
+    private void CastFire()
+    {
+        GameObject fireball = Instantiate(_fireBall, _firePoint.position, Quaternion.identity);
+        fireball.GetComponent<Rigidbody2D>().velocity = transform.right * _fireBallSpeed;
+        fireball.GetComponent<SpriteRenderer>().flipX = !_faceRight;
+        Destroy(fireball, 5f);
+    }
+
+    private void EndCasting()
+    {
+        _isCasting = false;
+        _playerAnimator.SetBool("Casting", false);
     }
 }

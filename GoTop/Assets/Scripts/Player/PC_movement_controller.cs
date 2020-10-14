@@ -25,6 +25,10 @@ public class PC_movement_controller : MonoBehaviour
         }    
         
         _crouch = Input.GetKey(KeyCode.C);
+
+        if (Input.GetKey(KeyCode.E))
+            _playerMovement.StartCasting();
+        
     }
 
     void FixedUpdate()
