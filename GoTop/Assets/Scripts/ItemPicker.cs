@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ItemPicker : MonoBehaviour
 {
+    [SerializeField] private int _healValue;
+    
     private void OnTriggerEnter2D(Collider2D info)
     {
-        if (info.gameObject.layer == 9)
-        {
-            Destroy(gameObject);
-        }
+        info.GetComponent<Player_controller>().ChangeHp(_healValue);
+        Destroy(gameObject);
     }
 }

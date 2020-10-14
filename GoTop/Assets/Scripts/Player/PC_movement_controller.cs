@@ -10,6 +10,7 @@ public class PC_movement_controller : MonoBehaviour
     float _move;
     bool _jump;
     bool _crouch;
+    float _raising;
     
     void Start()
     {
@@ -19,17 +20,18 @@ public class PC_movement_controller : MonoBehaviour
     void Update()
     {
         _move = Input.GetAxisRaw("Horizontal");
-        if(Input.GetButtonUp("Jump"))
-        {
-            _jump = true;
-        }    
+      
+        _jump = Input.GetButtonUp("Jump");
         
         _crouch = Input.GetKey(KeyCode.C);
+
+        _raising = Input.GetAxisRaw("Vertical");
+        
     }
 
     void FixedUpdate()
     {
-        _playerMovement.Move(_move, _jump, _crouch);
+        _playerMovement.Move(_move, _jump, _crouch, _raising);
         _jump = false;
     }
 }

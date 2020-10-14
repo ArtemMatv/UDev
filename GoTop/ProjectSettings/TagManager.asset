@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Block
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - Ground
   - Item
   - Enemies
-  - 
+  - Ladder
   - 
   - 
   - 
@@ -44,12 +46,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 698957249
-    locked: 0
   - name: Platforms
     uniqueID: 1412983005
     locked: 0
-  - name: New Layer
+  - name: Player
+    uniqueID: 698957249
+    locked: 0
+  - name: Traps
     uniqueID: 1677130311
     locked: 0

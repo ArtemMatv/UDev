@@ -1,0 +1,20 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Cinemachine;
+
+public class Camera_controller : MonoBehaviour
+{
+    [SerializeField] private CinemachineVirtualCamera _camera;
+    // Start is called before the first frame update
+    void Start()
+    {
+        _camera.m_Lens.OrthographicSize = 3;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
