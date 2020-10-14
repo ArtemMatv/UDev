@@ -50,7 +50,7 @@ public class Movement_controller : MonoBehaviour
     public void Move(float move, bool jump, bool crouch)
     {
         #region Movement
-        float speedModificator =  crouch ? _crouchSpeedReduce : 1;
+        float speedModificator = !_headCollider.enabled ? _crouchSpeedReduce : 1;
 
         if ((move != 0 && (_grounded || _airControll)))
         {
