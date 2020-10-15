@@ -4,29 +4,46 @@ using UnityEngine;
 
 public class Player_controller : MonoBehaviour
 {
-    [SerializeField] private int _maxHp;
-    private int _currentHp;
+    [SerializeField] private int _maxHP;
+    [SerializeField] private int _maxMP;
+    private int _currentHP;
+    private int _currentMP;
     void Start()
     {
-        _currentHp = _maxHp;
+        _currentHP = _maxHP;
+        _currentMP = _maxMP;
     }
 
     public void ChangeHp(int value)
     {
-        _currentHp += value;
+        _currentHP += value;
 
-        if (_currentHp > _maxHp)
+        if (_currentHP > _maxHP)
         {
-            _currentHp = _maxHp;
+            _currentHP = _maxHP;
         }
-        else if (_currentHp <= 0)
+        else if (_currentHP <= 0)
         {
             OnDeath();
         }
         Debug.Log("value = " + value);
-        Debug.Log("Current HP = " + _currentHp);
+        Debug.Log("Current HP = " + _currentHP);
     }
 
+    public bool ChangeMP(int value)
+    {
+        Debug.Log("MP value = " + value);
+
+        if (value < 0 && _currentMP < Mathf.Abs(value))
+            return false;
+
+        _currentMP += value;
+        if (_currentMP > _maxMP)
+            _currentMP = _maxMP;
+
+        Debug.Log("Current MP" + _currentMP);
+        return true;
+    }
     public void OnDeath()
     {
         Destroy(gameObject);

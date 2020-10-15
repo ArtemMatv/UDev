@@ -7,10 +7,13 @@ public class Movement_controller : MonoBehaviour
 {
     private Rigidbody2D _playerRD;
     private Animator _playerAnimator;
+    private Player_controller _playerController;
+
+    private bool _faceRight = true;
+    private bool _canMove = true;
 
     [Header("Horizontal movement")]
     [SerializeField]private  float _speed;
-    private bool _faceRight = true;
 
     [Header("Jumping")]
     [SerializeField]private Transform _groundCheck;
@@ -22,6 +25,7 @@ public class Movement_controller : MonoBehaviour
     [Header("Crouching")]
     [SerializeField]private Collider2D _headCollider;
     [SerializeField]private Transform _cellCheck;
+    [Range(0, 1)]
     [SerializeField]private float _crouchSpeedReduce;
     private bool _canStand;
 
@@ -33,17 +37,39 @@ public class Movement_controller : MonoBehaviour
     [SerializeField] private GameObject _fireBall;
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _fireBallSpeed;
+    [SerializeField] private int _castCost;
     private bool _isCasting;
+
+    [Header("Strike")]
+    [SerializeField] private Transform _strikePoint;
+    [SerializeField] private int _damage;
+    [SerializeField] private float _attackRange;
+    [SerializeField] private LayerMask _enemies;
+    private bool _isStriking;
+
+    [Header("Power Strike")]
+    [SerializeField] private float _chargeTime;
+    public float ChargeTime => _chargeTime;
+    [SerializeField] private float _powerStrikeSpeed;
+    [SerializeField] private int _powerStrikeDamage;
+    [SerializeField] private Collider2D _strikeCollider;
+    [SerializeField] private int _powerStrikeCost;
+    private List<EnemiesController> _damageEnemies = new List<EnemiesController>();
+
+
     void Start()
     {
         _playerRD = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
+        _playerController = GetComponent<Player_controller>();
     }
 
     private void OnDrawGizmos(){
         Gizmos.DrawWireSphere(_groundCheck.position, _radius);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_cellCheck.position, _radius);
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(_strikePoint.position, _attackRange);
     }
 
     void Flip()
@@ -54,6 +80,9 @@ public class Movement_controller : MonoBehaviour
 
     public void Move(float move, bool jump, bool crouch)
     {
+        if (!_canMove)
+            return;
+
         #region Movement
         float speedModificator = !_headCollider.enabled ? _crouchSpeedReduce : 1;
 
@@ -91,9 +120,11 @@ public class Movement_controller : MonoBehaviour
         #endregion
     }
 
+
+
     public void StartCasting()
     {
-        if (_isCasting)
+        if (_isCasting || !_playerController.ChangeMP(-_castCost))
             return;
 
         _isCasting = true;
@@ -112,5 +143,75 @@ public class Movement_controller : MonoBehaviour
     {
         _isCasting = false;
         _playerAnimator.SetBool("Casting", false);
+    }
+
+
+    public void StartStrike(float holdTime)
+    {
+        if (_isStriking)
+            return;
+
+        if (holdTime >= _chargeTime)
+        {
+            if (!_playerController.ChangeMP(-_powerStrikeCost))
+                return;
+
+            _playerAnimator.SetBool("PowerStrike", true);
+            _canMove = false;
+        }
+        else
+            _playerAnimator.SetBool("Strike", true);
+        
+        _isStriking = true;
+    }
+
+    private void Strike()
+    {
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(_strikePoint.position, _attackRange, _enemies);
+
+        if (enemies != null)
+            foreach(var enemy in enemies)
+                enemy.GetComponent<EnemiesController>().TakeDamage(_damage);
+    }
+
+    private void EndStrike()
+    {
+        _isStriking = false;
+        _playerAnimator.SetBool("Strike", false);
+    }
+
+    private void StartPowerStrike()
+    {
+        _playerRD.velocity = transform.right * _powerStrikeSpeed;
+        _strikeCollider.enabled = true;
+    }
+
+    private void DisablePowerStrike()
+    {
+        _playerRD.velocity = Vector2.zero;
+        _strikeCollider.enabled = false;
+        _damageEnemies.Clear();
+    }
+
+    private void EndPowerStrike()
+    {
+        _playerAnimator.SetBool("PowerStrike", false);
+        _isStriking = false;
+        _canMove = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!_strikeCollider.enabled)
+            return;
+
+
+        EnemiesController enemy = collision.collider.GetComponent<EnemiesController>();
+
+        if (enemy == null || _damageEnemies.Contains(enemy))
+            return;
+
+        enemy.TakeDamage(_powerStrikeDamage);
+        _damageEnemies.Add(enemy);
     }
 }

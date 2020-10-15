@@ -61,7 +61,7 @@
      <Compile Include="Assets\Scripts\HorizontalMover.cs" />
      <Compile Include="Assets\Scripts\ItemPicker.cs" />
      <Compile Include="Assets\Scripts\Player\Movement_controller.cs" />
-     <Compile Include="Assets\Scripts\Player\PC_movement_controller.cs" />
+     <Compile Include="Assets\Scripts\Player\PC_InputController.cs" />
      <Compile Include="Assets\Scripts\Player\Player_controller.cs" />
      <Compile Include="Assets\Scripts\ProjectileController.cs" />
      <None Include="Assets\Knight Files\Read Me.txt" />
