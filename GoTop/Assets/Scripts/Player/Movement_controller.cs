@@ -11,6 +11,7 @@ public class Movement_controller : MonoBehaviour
 
     private bool _faceRight = true;
     private bool _canMove = true;
+    private float _gravity;
 
     [Header("Horizontal movement")]
     [SerializeField]private  float _speed;
@@ -57,11 +58,18 @@ public class Movement_controller : MonoBehaviour
     private List<EnemiesController> _damageEnemies = new List<EnemiesController>();
 
 
+    [Header("Lader")]
+    [SerializeField] private LayerMask _whatIsLadder;
+    [SerializeField] private float _ladderSpeed;
+    [SerializeField] private Collider2D[] _collidersToDisable;
+    private bool _raising = false;
+
     void Start()
     {
         _playerRD = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
         _playerController = GetComponent<Player_controller>();
+        _gravity = _playerRD.gravityScale;
     }
 
     private void OnDrawGizmos(){
@@ -78,8 +86,26 @@ public class Movement_controller : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
-    public void Move(float move, bool jump, bool crouch)
+    public void Move(float move, bool jump, bool crouch, float vervicalMove)
     {
+        if (_raising)
+        {
+            _playerRD.velocity = new Vector2(0, vervicalMove * _ladderSpeed);
+
+            if (!(Physics2D.OverlapCircle(_cellCheck.position, _radius, _whatIsLadder)
+            || Physics2D.OverlapCircle(_groundCheck.position, _radius, _whatIsLadder)))
+            {
+                _canMove = true;
+                _raising = false;
+                _playerRD.gravityScale = _gravity;
+
+                foreach (Collider2D collider in _collidersToDisable)
+                {
+                    collider.enabled = true;
+                }
+            }
+        }
+
         if (!_canMove)
             return;
 
@@ -213,5 +239,23 @@ public class Movement_controller : MonoBehaviour
 
         enemy.TakeDamage(_powerStrikeDamage);
         _damageEnemies.Add(enemy);
+    }
+
+    public void UseLadder()
+    {
+        bool goTop = Physics2D.OverlapCircle(_cellCheck.position, _radius, _whatIsLadder);
+        bool goDown = Physics2D.OverlapCircle(_groundCheck.position, _radius, _whatIsLadder);
+
+        if (goTop || goDown)
+        {
+            _canMove = !_canMove;
+            _raising = !_raising;
+            _playerRD.gravityScale = _playerRD.gravityScale == 0 ? _gravity : 0;
+
+            foreach (Collider2D collider in _collidersToDisable)
+            {
+                collider.enabled = false;
+            }
+        }
     }
 }

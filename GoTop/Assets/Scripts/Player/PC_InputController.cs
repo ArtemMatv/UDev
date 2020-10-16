@@ -9,6 +9,7 @@ public class PC_InputController : MonoBehaviour
     Movement_controller _playerMovement;
     DateTime _strikeClickTime;
     float _move;
+    float _verticalMove;
     bool _jump;
     bool _crouch;
     bool _canAtack;
@@ -22,6 +23,7 @@ public class PC_InputController : MonoBehaviour
     void Update()
     {
         _move = Input.GetAxisRaw("Horizontal");
+        _verticalMove = Input.GetAxisRaw("Vertical");
         if (Input.GetButtonUp("Jump"))
         {
             _jump = true;
@@ -52,11 +54,13 @@ public class PC_InputController : MonoBehaviour
             _canAtack = false;
         }
 
+        if (Input.GetKey(KeyCode.E))
+            _playerMovement.UseLadder();
     }
 
     private void FixedUpdate()
     {
-        _playerMovement.Move(_move, _jump, _crouch);
+        _playerMovement.Move(_move, _jump, _crouch, _verticalMove);
         _jump = false;
     }
 }

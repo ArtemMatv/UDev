@@ -19,7 +19,7 @@ TagManager:
   - Item
   - Enemies
   - PlayerProjectiles
-  - 
+  - Ladder
   - 
   - 
   - 
@@ -47,12 +47,12 @@ TagManager:
   - name: Platforms
     uniqueID: 1412983005
     locked: 0
+  - name: Ladder
+    uniqueID: 1677130311
+    locked: 0
   - name: Traps
     uniqueID: 3776819357
     locked: 0
   - name: Player
     uniqueID: 698957249
-    locked: 0
-  - name: New Layer
-    uniqueID: 1677130311
     locked: 0
