@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
@@ -14,25 +15,25 @@ public class Movement_controller : MonoBehaviour
     private float _gravity;
 
     [Header("Horizontal movement")]
-    [SerializeField]private  float _speed;
+    [SerializeField] private float _speed;
 
     [Header("Jumping")]
-    [SerializeField]private Transform _groundCheck;
-    [SerializeField]private float _jumpForce;
-    [SerializeField]private bool _airControll;
+    [SerializeField] private Transform _groundCheck;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private bool _airControll;
     private bool _grounded;
     private bool _doubleJumpAvailability = true;
 
     [Header("Crouching")]
-    [SerializeField]private Collider2D _headCollider;
-    [SerializeField]private Transform _cellCheck;
+    [SerializeField] private Collider2D _headCollider;
+    [SerializeField] private Transform _cellCheck;
     [Range(0, 1)]
-    [SerializeField]private float _crouchSpeedReduce;
+    [SerializeField] private float _crouchSpeedReduce;
     private bool _canStand;
 
     [Header("Ground settings")]
-    [SerializeField]private LayerMask _whatIsGround;
-    [SerializeField]private float _radius;
+    [SerializeField] private LayerMask _whatIsGround;
+    [SerializeField] private float _radius;
 
     [Header("Casting")]
     [SerializeField] private GameObject _fireBall;
@@ -62,6 +63,10 @@ public class Movement_controller : MonoBehaviour
     [SerializeField] private LayerMask _whatIsLadder;
     [SerializeField] private float _ladderSpeed;
     [SerializeField] private Collider2D[] _collidersToDisable;
+    [SerializeField] private Transform _raiseCheck;
+    [SerializeField] private float _raiseCheckHeight;
+    private Vector3 _raiseCheckVector => new Vector3(0.01f, _raiseCheckHeight);
+    [SerializeField] private Transform _goDownCheck;
     private bool _raising = false;
 
     void Start()
@@ -72,12 +77,17 @@ public class Movement_controller : MonoBehaviour
         _gravity = _playerRD.gravityScale;
     }
 
-    private void OnDrawGizmos(){
+    private void OnDrawGizmos()
+    {
         Gizmos.DrawWireSphere(_groundCheck.position, _radius);
-        Gizmos.color = Color.red;
+        Gizmos.color = UnityEngine.Color.red;
         Gizmos.DrawWireSphere(_cellCheck.position, _radius);
-        Gizmos.color = Color.black;
+        Gizmos.color = UnityEngine.Color.black;
         Gizmos.DrawWireSphere(_strikePoint.position, _attackRange);
+        Gizmos.color = UnityEngine.Color.green;
+        Gizmos.DrawWireCube(_raiseCheck.position, _raiseCheckVector);
+        Gizmos.color = UnityEngine.Color.yellow;
+        Gizmos.DrawWireSphere(_goDownCheck.position, 0.01f);
     }
 
     void Flip()
@@ -90,11 +100,21 @@ public class Movement_controller : MonoBehaviour
     {
         if (_raising)
         {
-            _playerRD.velocity = new Vector2(0, vervicalMove * _ladderSpeed);
-
-            if (!(Physics2D.OverlapCircle(_cellCheck.position, _radius, _whatIsLadder)
-            || Physics2D.OverlapCircle(_groundCheck.position, _radius, _whatIsLadder)))
+            Debug.Log("Raising...");
+            if (Physics2D.OverlapBox(_raiseCheck.position, _raiseCheckVector, 0, _whatIsLadder) && vervicalMove > 0
+                || Physics2D.OverlapPoint(_goDownCheck.position, _whatIsLadder) && vervicalMove < 0)
             {
+                _playerRD.velocity = new Vector2(0, vervicalMove * _ladderSpeed);
+            }
+            else
+            {
+                _playerRD.velocity = Vector2.zero;
+            }
+
+            if (!(Physics2D.OverlapBox(_raiseCheck.position, _raiseCheckVector, 0, _whatIsLadder)
+                || Physics2D.OverlapPoint(_goDownCheck.position, _whatIsLadder)))
+            {
+                Debug.Log("Out of ladder");
                 _canMove = true;
                 _raising = false;
                 _playerRD.gravityScale = _gravity;
@@ -125,7 +145,7 @@ public class Movement_controller : MonoBehaviour
 
         #region Jump
         _grounded = Physics2D.OverlapCircle(_groundCheck.position, _radius, _whatIsGround);
-        if(jump && (_doubleJumpAvailability || _grounded))
+        if (jump && (_doubleJumpAvailability || _grounded))
         {
             _playerRD.AddForce(Vector2.up * _jumpForce);
             _doubleJumpAvailability = _grounded;
@@ -187,7 +207,7 @@ public class Movement_controller : MonoBehaviour
         }
         else
             _playerAnimator.SetBool("Strike", true);
-        
+
         _isStriking = true;
     }
 
@@ -196,7 +216,7 @@ public class Movement_controller : MonoBehaviour
         Collider2D[] enemies = Physics2D.OverlapCircleAll(_strikePoint.position, _attackRange, _enemies);
 
         if (enemies != null)
-            foreach(var enemy in enemies)
+            foreach (var enemy in enemies)
                 enemy.GetComponent<EnemiesController>().TakeDamage(_damage);
     }
 
@@ -243,8 +263,8 @@ public class Movement_controller : MonoBehaviour
 
     public void UseLadder()
     {
-        bool goTop = Physics2D.OverlapCircle(_cellCheck.position, _radius, _whatIsLadder);
-        bool goDown = Physics2D.OverlapCircle(_groundCheck.position, _radius, _whatIsLadder);
+        bool goTop = Physics2D.OverlapBox(_raiseCheck.position, _raiseCheckVector, 0, _whatIsLadder);
+        bool goDown = Physics2D.OverlapPoint(_goDownCheck.position, _whatIsLadder);
 
         if (goTop || goDown)
         {
@@ -254,7 +274,7 @@ public class Movement_controller : MonoBehaviour
 
             foreach (Collider2D collider in _collidersToDisable)
             {
-                collider.enabled = false;
+                collider.enabled = !collider.enabled;
             }
         }
     }

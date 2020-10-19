@@ -54,8 +54,9 @@ public class PC_InputController : MonoBehaviour
             _canAtack = false;
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
             _playerMovement.UseLadder();
+        
     }
 
     private void FixedUpdate()
