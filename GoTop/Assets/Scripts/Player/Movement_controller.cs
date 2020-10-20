@@ -100,7 +100,6 @@ public class Movement_controller : MonoBehaviour
     {
         if (_raising)
         {
-            Debug.Log("Raising...");
             if (Physics2D.OverlapBox(_raiseCheck.position, _raiseCheckVector, 0, _whatIsLadder) && vervicalMove > 0
                 || Physics2D.OverlapPoint(_goDownCheck.position, _whatIsLadder) && vervicalMove < 0)
             {
@@ -110,21 +109,8 @@ public class Movement_controller : MonoBehaviour
             {
                 _playerRD.velocity = Vector2.zero;
             }
-
-            if (!(Physics2D.OverlapBox(_raiseCheck.position, _raiseCheckVector, 0, _whatIsLadder)
-                || Physics2D.OverlapPoint(_goDownCheck.position, _whatIsLadder)))
-            {
-                Debug.Log("Out of ladder");
-                _canMove = true;
-                _raising = false;
-                _playerRD.gravityScale = _gravity;
-
-                foreach (Collider2D collider in _collidersToDisable)
-                {
-                    collider.enabled = true;
-                }
-            }
         }
+        _playerAnimator.SetBool("OnLadder", _raising);
 
         if (!_canMove)
             return;
@@ -159,11 +145,31 @@ public class Movement_controller : MonoBehaviour
             _headCollider.enabled = !crouch;
         #endregion
 
-        #region Animation
+       #region Animation
         _playerAnimator.SetFloat("Speed", Mathf.Abs(move));
         _playerAnimator.SetBool("Jump", !_grounded);
         _playerAnimator.SetBool("Crouch", !_headCollider.enabled);
+        
         #endregion
+    }
+
+    private void FixedUpdate()
+    {
+        if (_raising)
+        {
+            if (!(Physics2D.OverlapBox(_raiseCheck.position, _raiseCheckVector, 0, _whatIsLadder)
+                || Physics2D.OverlapPoint(_goDownCheck.position, _whatIsLadder)))
+            {
+                _canMove = true;
+                _raising = false;
+                _playerRD.gravityScale = _gravity;
+                
+                foreach (Collider2D collider in _collidersToDisable)
+                {
+                    collider.enabled = true;
+                }
+            }
+        }
     }
 
 
@@ -266,7 +272,7 @@ public class Movement_controller : MonoBehaviour
         bool goTop = Physics2D.OverlapBox(_raiseCheck.position, _raiseCheckVector, 0, _whatIsLadder);
         bool goDown = Physics2D.OverlapPoint(_goDownCheck.position, _whatIsLadder);
 
-        if (goTop || goDown)
+        if ((goTop || goDown) && Physics2D.OverlapPoint(_goDownCheck.position, _whatIsGround))
         {
             _canMove = !_canMove;
             _raising = !_raising;
