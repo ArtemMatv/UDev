@@ -20,7 +20,7 @@ TagManager:
   - Enemies
   - PlayerProjectiles
   - Ladder
-  - 
+  - EnemyProjectiles
   - 
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: Traps
     uniqueID: 3776819357
+    locked: 0
+  - name: Enemies
+    uniqueID: 995601739
     locked: 0
   - name: Player
     uniqueID: 698957249
