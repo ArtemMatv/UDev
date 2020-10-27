@@ -23,6 +23,12 @@ public abstract class EnemyControllerBase : MonoBehaviour
     [SerializeField] private bool _checkRange;
     [SerializeField] private Transform _wallCheck;
 
+    [Header("Collision damage")]
+
+    [SerializeField] private DamageTypes _collisionDamageType;
+    [SerializeField] protected int _collisionDamage;
+    [SerializeField] protected float _collisionTimeDelay;
+    protected float _lastDamageTime;
     protected bool _faceRight = true;
 
     protected virtual void Start()
@@ -78,7 +84,7 @@ public abstract class EnemyControllerBase : MonoBehaviour
 
     protected void GetRandomState()
     {
-        int state = Random.Range(0, _availableStates.Length);
+        int state = Random.Range(0, _availableStates.Length - 1);
 
         if (_currentState == EnemyState.Idle && _availableStates[state] == EnemyState.Idle)
         {
@@ -98,6 +104,23 @@ public abstract class EnemyControllerBase : MonoBehaviour
 
         _currentState = state;
         _lastStateChange = Time.time;
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        TryToDamage(collision.collider);
+    }
+
+    protected virtual void TryToDamage(Collider2D enemy)
+    {
+        if (Time.time - _lastDamageTime < _collisionTimeDelay)
+            return;
+
+        Player_controller player = enemy.GetComponent<Player_controller>();
+
+        if (player != null)
+            player.TakeDamage(_collisionDamage, _collisionDamageType, transform);
+        
     }
 }
 

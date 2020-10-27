@@ -87,7 +87,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4584590730346925902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.92, y: -4.62, z: 0}
+  m_LocalPosition: {x: -8.988, y: -5.046, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 8021131494849025565}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxStateTime: 3
   _minStateTime: 1
-  _availableStates: 
+  _availableStates: 00000000000000000300000003000000040000000200000002000000010000000100000001000000
   _speed: 2
   _range: 11.49
   _groundCheck: {fileID: 8021131494849025565}
@@ -207,12 +207,14 @@ MonoBehaviour:
     m_Bits: 1024
   _checkRange: 1
   _wallCheck: {fileID: 2479477013927595152}
-  _projectilePrefab: {fileID: 3410750722152177041, guid: 3cb68a1780a7c46439fa03f6039ffd17,
+  _collisionDamageType: 1
+  _collisionDamage: 40
+  _collisionTimeDelay: 2
+  _projectilePrefab: {fileID: 3410750722152177041, guid: 5882c059dd80e1548811313a7a7303af,
     type: 3}
   _shootPoint: {fileID: 8187950905884088428}
   _arrowSpeed: 5
   _angerRange: 10
-  _idleTime: 3
   _strikePoint: {fileID: 5772244372006382363}
   _damage: 25
   _strikeRange: 2.5
@@ -220,8 +222,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _strikeCollider: {fileID: 256237004829278932}
-  _powerStrikeDamage: 40
-  _powerStrikeSpeed: 5
+  _powerStrikeSpeed: 10
   _powerStrikeRange: 5
   _waitTime: 2
 --- !u!114 &8929253248694771918

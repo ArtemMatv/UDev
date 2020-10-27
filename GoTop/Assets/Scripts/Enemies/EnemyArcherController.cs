@@ -63,8 +63,8 @@ public class EnemyArcherController : PinkEnemyController
 
     protected void TurnToPlayer()
     {
-        if ((_player.transform.position.x - transform.position.x > 0 && !_faceRight)
-            || (_player.transform.position.x - transform.position.x < 0 && _faceRight))
+        if ((_player.transform.position.x - transform.position.x - 1 > 0 && !_faceRight)
+            || (_player.transform.position.x - transform.position.x + 1 < 0 && _faceRight))
         {
             Flip();
         }    

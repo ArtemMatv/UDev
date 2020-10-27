@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class EnemyBossController : EnemyArcherController
 {
-    [SerializeField] private float _idleTime;
-
-    private bool _inAttackRange;
-
     [Header("Strike")]
     [SerializeField] private Transform _strikePoint;
     [SerializeField] private int _damage;
@@ -16,7 +12,6 @@ public class EnemyBossController : EnemyArcherController
 
     [Header("PowerStrike")]
     [SerializeField] private Collider2D _strikeCollider;
-    [SerializeField] private int _powerStrikeDamage;
     [SerializeField] private float _powerStrikeSpeed;
     [SerializeField] private float _powerStrikeRange;
 
@@ -53,7 +48,7 @@ public class EnemyBossController : EnemyArcherController
         {
             Player_controller playerController = player.GetComponent<Player_controller>();
             if (playerController != null)
-                playerController.ChangeHp(-_damage);
+                playerController.TakeDamage(_damage);
         }
     }
 
@@ -79,8 +74,8 @@ public class EnemyBossController : EnemyArcherController
             _isAngry = true;
             if (!_fightStarted)
             {
-                StartCoroutine(BeginNewCircle());
                 StopCoroutine(ScanForPlayer());
+                StartCoroutine(BeginNewCircle());
             }
         }
         else
@@ -163,5 +158,13 @@ public class EnemyBossController : EnemyArcherController
     {
         int state = Random.Range(0, _attackStates.Length);
         ChangeState(_attackStates[state]);
+    }
+
+    protected override void TryToDamage(Collider2D enemy)
+    {
+        if (_currentState == EnemyState.Idle || _currentState == EnemyState.Shoot)
+            return;
+
+        base.TryToDamage(enemy);
     }
 }

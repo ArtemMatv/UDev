@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 531894820960617367}
   - component: {fileID: 531894820960617362}
   - component: {fileID: 531894820960617357}
-  - component: {fileID: 3472185980019158857}
   m_Layer: 12
   m_Name: PinkEnemy
   m_TagString: Untagged
@@ -201,6 +200,7 @@ MonoBehaviour:
   _maxStateTime: 4
   _minStateTime: 2
   _availableStates: 00000000010000000100000000000000010000000100000001000000010000000100000001000000
+  _collisionDamageType: 1
   _speed: 2
   _range: 1.76
   _groundCheck: {fileID: 531894822844343091}
@@ -209,20 +209,8 @@ MonoBehaviour:
     m_Bits: 1024
   _checkRange: 1
   _wallCheck: {fileID: 3132567002525031972}
---- !u!114 &3472185980019158857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531894820960617364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58bc0cd2514090f4c8d36f10e7ea6b90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 15
-  _timeDelay: 1
+  _collisionDamage: 15
+  _collisionTimeDelay: 1
 --- !u!1 &531894822844343088
 GameObject:
   m_ObjectHideFlags: 0

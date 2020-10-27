@@ -17,7 +17,7 @@ public class DamageDealer : MonoBehaviour
 
         _player = info.GetComponent<Player_controller>();
         if (_player != null){
-            _player.ChangeHp(-_damage);
+            _player.TakeDamage(_damage);
         }
     }
 
@@ -31,7 +31,7 @@ public class DamageDealer : MonoBehaviour
     {
         if (_player != null && (DateTime.Now - _lastInCounter).TotalSeconds > _timeDelay)
         {
-            _player.ChangeHp(-_damage);
+            _player.TakeDamage(_damage);
             _lastInCounter = DateTime.Now;
         }
     }

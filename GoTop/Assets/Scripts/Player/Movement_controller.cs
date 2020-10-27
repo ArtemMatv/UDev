@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class Movement_controller : MonoBehaviour
 {
+    public event Action<bool> OnGetHurt = delegate { };
+
     private Rigidbody2D _playerRD;
     private Animator _playerAnimator;
     private Player_controller _playerController;
@@ -69,6 +72,9 @@ public class Movement_controller : MonoBehaviour
     [SerializeField] private Transform _goDownCheck;
     private bool _raising = false;
 
+    [SerializeField] private float _pushForce;
+    private float _lastHurtTime;
+
     void Start()
     {
         _playerRD = GetComponent<Rigidbody2D>();
@@ -130,7 +136,6 @@ public class Movement_controller : MonoBehaviour
         #endregion
 
         #region Jump
-        _grounded = Physics2D.OverlapCircle(_groundCheck.position, _radius, _whatIsGround);
         if (jump && (_doubleJumpAvailability || _grounded))
         {
             _playerRD.AddForce(Vector2.up * _jumpForce);
@@ -170,6 +175,10 @@ public class Movement_controller : MonoBehaviour
                 }
             }
         }
+
+        _grounded = Physics2D.OverlapCircle(_groundCheck.position, _radius, _whatIsGround);
+        if (_playerAnimator.GetBool("Hurt") && _grounded && Time.time - _lastHurtTime > 0.5f)
+            EndHurt();
     }
 
 
@@ -283,5 +292,35 @@ public class Movement_controller : MonoBehaviour
                 collider.enabled = !collider.enabled;
             }
         }
+    }
+
+    private void EndAnimation()
+    {
+        
+        _playerAnimator.SetBool("Strike", false);
+        _playerAnimator.SetBool("PowerStrike", false);
+        _playerAnimator.SetBool("Casting", false);
+        _isCasting = false;
+        _isStriking = false;
+    }
+
+    public void GetHurt(Vector2 position)
+    {
+        _lastHurtTime = Time.time;
+        _canMove = false;
+        OnGetHurt(false);
+        Vector2 pushDirection = new Vector2();
+        pushDirection.x = position.x > transform.position.x ? -1 : 1;
+        pushDirection.y = 1;
+        EndAnimation();
+        _playerAnimator.SetBool("Hurt", true);
+        _playerRD.AddForce(pushDirection * _pushForce, ForceMode2D.Impulse);
+    }
+
+    private void EndHurt()
+    {
+        _canMove = true;
+        _playerAnimator.SetBool("Hurt", false);
+        OnGetHurt(true);
     }
 }

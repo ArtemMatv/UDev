@@ -11,7 +11,11 @@ public class EnemiesController : MonoBehaviour
         _hp -= damage;
 
         if (_hp <= 0)
-            OnDeath();
+        {
+            GetComponent<Animator>().SetBool("Dead", true);
+            Debug.Log("zero GP");
+            Debug.Log(GetComponent<Animator>());
+        }
     }
 
     private void OnDeath()

@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxStateTime: 5
   _minStateTime: 2
-  _availableStates: 
+  _availableStates: 00000000000000000100000001000000020000000100000002000000010000000100000001000000
   _speed: 3
   _range: 1.78
   _groundCheck: {fileID: 2900715860086820982}
@@ -181,6 +181,9 @@ MonoBehaviour:
     m_Bits: 1024
   _checkRange: 0
   _wallCheck: {fileID: 402125677482848703}
+  _collisionDamageType: 0
+  _collisionDamage: 0
+  _collisionTimeDelay: 0
   _projectilePrefab: {fileID: 2293021845242267016, guid: 3dff05eeca8793c46970ce33689a7a09,
     type: 3}
   _shootPoint: {fileID: 2900715859701320572}
