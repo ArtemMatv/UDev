@@ -2475,6 +2475,11 @@ PrefabInstance:
       propertyPath: _maxHP
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 652768029976818235, guid: 17dae4bf60d2110469498a9aa5e38f3d,
+        type: 3}
+      propertyPath: _maxMP
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17dae4bf60d2110469498a9aa5e38f3d, type: 3}
 --- !u!4 &1502710667 stripped
@@ -4034,7 +4039,7 @@ PrefabInstance:
     - target: {fileID: 4584590730346925902, guid: f6e3c7e8fbcbd234bb190fa3459b27ea,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8670131173093120322, guid: f6e3c7e8fbcbd234bb190fa3459b27ea,
         type: 3}
@@ -4118,7 +4123,7 @@ PrefabInstance:
     - target: {fileID: 2900715859187262534, guid: 3b24c2acabfa26b408777e8a8a1b8f4a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2900715859187262535, guid: 3b24c2acabfa26b408777e8a8a1b8f4a,
         type: 3}

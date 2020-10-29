@@ -223,8 +223,8 @@ MonoBehaviour:
     m_Bits: 1024
   _checkRange: 1
   _wallCheck: {fileID: 2479477013927595152}
-  _maxStateTime: 3
-  _minStateTime: 1
+  _maxStateTime: 4
+  _minStateTime: 2
   _availableStates: 00000000000000000300000003000000040000000200000002000000010000000100000001000000
   _collisionDamageType: 0
   _collisionDamage: 0

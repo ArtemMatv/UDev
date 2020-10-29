@@ -91,10 +91,14 @@ public class EnemyArcherController : EnemyControllerBase
                 break;
         }
 
-        if (!_isAngry)
-            ChangeState(EnemyState.Idle);
-
         base.EndState();
+    }
+
+    protected override void ResetState()
+    {
+        _enemyAnimator.SetBool("Shoot", false);
+        base.ResetState();
+       
     }
 
     protected override void DoStateAction()

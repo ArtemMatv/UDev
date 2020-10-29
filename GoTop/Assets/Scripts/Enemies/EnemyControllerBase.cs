@@ -111,12 +111,10 @@ public abstract class EnemyControllerBase : MonoBehaviour
         if (_currentState == EnemyState.Death)
             return;
 
-        if (_currentState != EnemyState.Idle)
-            _enemyAnimator.SetBool(_currentState.ToString(), false);
+        ResetState();
+        _currentState = EnemyState.Idle;
 
-        if (state == EnemyState.Hurt)
-            GetHurt();
-        else if (state != EnemyState.Idle)
+        if (state != EnemyState.Idle)
             _enemyAnimator.SetBool(state.ToString(), true);
 
         _currentState = state;
@@ -127,10 +125,17 @@ public abstract class EnemyControllerBase : MonoBehaviour
             case EnemyState.Idle:
                 _enemyRB.velocity = Vector2.zero;
                 break;
-            case EnemyState.Move:
-                _startPoint = transform.position;
+            case EnemyState.Death:
+                DisableEnemy();
                 break;
         }
+    }
+
+    private void DisableEnemy()
+    {
+        _enemyRB.velocity = Vector2.zero;
+        _enemyRB.bodyType = RigidbodyType2D.Static;
+        GetComponent<Collider2D>().enabled = false;
     }
 
     protected virtual void EndState()
@@ -140,6 +145,14 @@ public abstract class EnemyControllerBase : MonoBehaviour
 
         if (_currentState == EnemyState.Hurt)
             EndHurt();
+
+        ResetState();
+    }
+
+    protected virtual void ResetState()
+    {
+        _enemyAnimator.SetBool("Move", false);
+        _enemyAnimator.SetBool("Hurt", false);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
@@ -184,17 +197,14 @@ public abstract class EnemyControllerBase : MonoBehaviour
         _enemyAnimator.SetBool("Hurt", false);
     }
 
-    public void OnDeathStart()
-    {
-        _canMove = false;
-    }
-
     public void EndDeath()
     {
         Destroy(gameObject);
     }
 
     protected virtual void DoStateAction() { }
+
+
 }
 
 public enum EnemyState
