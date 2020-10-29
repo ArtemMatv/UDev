@@ -98,7 +98,6 @@ public class EnemyBossController : EnemyArcherController
             {
                 _stateOnHold = state;
                 state = EnemyState.Move;
-                
             }
         }
         base.ChangeState(state);
@@ -172,5 +171,25 @@ public class EnemyBossController : EnemyArcherController
             return;
 
         player.TakeDamage(_powerStrikeDamage, DamageTypes.PowerStrike, transform);
+    }
+
+    public override void TakeDamage(int damage, DamageTypes type = DamageTypes.Casual, Transform player = null)
+    {
+        base.TakeDamage(damage, type, player);
+        if (_currentHp < _maxHP / 2 )
+        {
+            Debug.Log("RAGEEEE");
+            _enemyAnimator.SetBool("Rage", true);
+            _damage *= 2;
+        }
+    }
+
+    protected override void TurnToPlayer()
+    {
+        if ((_player.transform.position.x - transform.position.x - 2> 0 && !_faceRight)
+            || (_player.transform.position.x - transform.position.x + 2< 0 && _faceRight))
+        {
+            Flip();
+        }
     }
 }

@@ -9,8 +9,8 @@ public abstract class EnemyControllerBase : MonoBehaviour
     protected EnemyState _currentState;
 
     [Header("HP")]
-    [SerializeField] private int _maxHP;
-    private int _currentHp;
+    [SerializeField] protected int _maxHP;
+    protected int _currentHp;
 
     [Header("Movement")]
     [SerializeField] private float _speed;
