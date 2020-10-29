@@ -26,8 +26,7 @@ public class Player_controller : MonoBehaviour
             return;
 
         _currentHP -= damage;
-        if (_currentHP <= 0)
-            OnDeath();
+        Debug.Log(damage);
 
         switch (type)
         {
@@ -36,9 +35,10 @@ public class Player_controller : MonoBehaviour
                 break;
 
         }
-
-        Debug.Log("value = " + damage);
-        Debug.Log("Current HP = " + _currentHP);
+        if (_currentHP <= 0)
+        {
+            _playerMovement.OnDeathStart();
+        }
     }
 
     private void OnGetHurt(bool canBeDamaged)
@@ -51,15 +51,10 @@ public class Player_controller : MonoBehaviour
         _currentHP += hp;
         if (_currentHP > _maxHP)
             _currentHP = _maxHP;
-
-        Debug.Log("value = " + hp);
-        Debug.Log("Current HP = " + _currentHP);
     }
 
     public bool ChangeMP(int value)
     {
-        Debug.Log("MP value = " + value);
-
         if (value < 0 && _currentMP < Mathf.Abs(value))
             return false;
 
@@ -67,11 +62,6 @@ public class Player_controller : MonoBehaviour
         if (_currentMP > _maxMP)
             _currentMP = _maxMP;
 
-        Debug.Log("Current MP" + _currentMP);
         return true;
-    }
-    public void OnDeath()
-    {
-        Destroy(gameObject);
     }
 }

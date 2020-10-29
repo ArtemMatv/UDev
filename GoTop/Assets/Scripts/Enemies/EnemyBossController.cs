@@ -12,6 +12,7 @@ public class EnemyBossController : EnemyArcherController
 
     [Header("PowerStrike")]
     [SerializeField] private Collider2D _strikeCollider;
+    [SerializeField] private int _powerStrikeDamage;
     [SerializeField] private float _powerStrikeSpeed;
     [SerializeField] private float _powerStrikeRange;
 
@@ -165,6 +166,11 @@ public class EnemyBossController : EnemyArcherController
         if (_currentState == EnemyState.Idle || _currentState == EnemyState.Shoot)
             return;
 
-        base.TryToDamage(enemy);
+        Player_controller player = enemy.GetComponent<Player_controller>();
+
+        if (player == null)
+            return;
+
+        player.TakeDamage(_powerStrikeDamage, DamageTypes.PowerStrike, transform);
     }
 }

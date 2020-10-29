@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyArcherController : PinkEnemyController
+public class EnemyArcherController : EnemyControllerBase
 {
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private Transform _shootPoint;
@@ -82,7 +82,7 @@ public class EnemyArcherController : PinkEnemyController
         }
     }
 
-    protected virtual void EndState()
+    protected override void EndState()
     {
         switch (_currentState)
         {
@@ -93,10 +93,13 @@ public class EnemyArcherController : PinkEnemyController
 
         if (!_isAngry)
             ChangeState(EnemyState.Idle);
+
+        base.EndState();
     }
 
-    protected virtual void DoStateAction()
+    protected override void DoStateAction()
     {
+        base.DoStateAction();
         switch (_currentState)
         {
             case EnemyState.Shoot:
@@ -104,4 +107,20 @@ public class EnemyArcherController : PinkEnemyController
                 break;
         }
     }
+
+    public override void GetHurt()
+    {
+        _attacking = false;
+        base.GetHurt();
+    }
+
+    #region PublicMethods
+    public override void TakeDamage(int damage, DamageTypes type = DamageTypes.Casual, Transform player = null)
+    {
+        if (_currentState == EnemyState.PowerStrike && type != DamageTypes.Projectile)
+            return;
+
+        base.TakeDamage(damage, type, player);
+    }
+    #endregion
 }

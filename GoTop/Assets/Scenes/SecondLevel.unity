@@ -2470,6 +2470,11 @@ PrefabInstance:
       propertyPath: _pushForce
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 652768029976818235, guid: 17dae4bf60d2110469498a9aa5e38f3d,
+        type: 3}
+      propertyPath: _maxHP
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17dae4bf60d2110469498a9aa5e38f3d, type: 3}
 --- !u!4 &1502710667 stripped
@@ -2618,12 +2623,12 @@ PrefabInstance:
     - target: {fileID: 531894820960617363, guid: e0f2b924cee0a584f8bdefb7d74578ce,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.835987
+      value: -12.52
       objectReference: {fileID: 0}
     - target: {fileID: 531894820960617363, guid: e0f2b924cee0a584f8bdefb7d74578ce,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8010702
+      value: -6.3
       objectReference: {fileID: 0}
     - target: {fileID: 531894820960617363, guid: e0f2b924cee0a584f8bdefb7d74578ce,
         type: 3}
@@ -2674,6 +2679,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PinkEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 531894820960617364, guid: e0f2b924cee0a584f8bdefb7d74578ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3472185980019158857, guid: e0f2b924cee0a584f8bdefb7d74578ce, type: 3}
@@ -4021,6 +4031,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkeletonBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 4584590730346925902, guid: f6e3c7e8fbcbd234bb190fa3459b27ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8670131173093120322, guid: f6e3c7e8fbcbd234bb190fa3459b27ea,
         type: 3}
       propertyPath: m_Constraints
@@ -4038,12 +4053,12 @@ PrefabInstance:
     - target: {fileID: 2900715859187262531, guid: 3b24c2acabfa26b408777e8a8a1b8f4a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.53
+      value: -13.2
       objectReference: {fileID: 0}
     - target: {fileID: 2900715859187262531, guid: 3b24c2acabfa26b408777e8a8a1b8f4a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.05
+      value: -6.16
       objectReference: {fileID: 0}
     - target: {fileID: 2900715859187262531, guid: 3b24c2acabfa26b408777e8a8a1b8f4a,
         type: 3}
@@ -4099,6 +4114,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900715859187262534, guid: 3b24c2acabfa26b408777e8a8a1b8f4a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2900715859187262535, guid: 3b24c2acabfa26b408777e8a8a1b8f4a,
         type: 3}

@@ -59,7 +59,7 @@ public class Movement_controller : MonoBehaviour
     [SerializeField] private int _powerStrikeDamage;
     [SerializeField] private Collider2D _strikeCollider;
     [SerializeField] private int _powerStrikeCost;
-    private List<EnemiesController> _damageEnemies = new List<EnemiesController>();
+    private List<EnemyControllerBase> _damageEnemies = new List<EnemyControllerBase>();
 
 
     [Header("Lader")]
@@ -104,6 +104,7 @@ public class Movement_controller : MonoBehaviour
 
     public void Move(float move, bool jump, bool crouch, float vervicalMove)
     {
+        #region Ladder
         if (_raising)
         {
             if (Physics2D.OverlapBox(_raiseCheck.position, _raiseCheckVector, 0, _whatIsLadder) && vervicalMove > 0
@@ -117,6 +118,7 @@ public class Movement_controller : MonoBehaviour
             }
         }
         _playerAnimator.SetBool("OnLadder", _raising);
+        #endregion
 
         if (!_canMove)
             return;
@@ -154,7 +156,6 @@ public class Movement_controller : MonoBehaviour
         _playerAnimator.SetFloat("Speed", Mathf.Abs(move));
         _playerAnimator.SetBool("Jump", !_grounded);
         _playerAnimator.SetBool("Crouch", !_headCollider.enabled);
-        
         #endregion
     }
 
@@ -180,8 +181,6 @@ public class Movement_controller : MonoBehaviour
         if (_playerAnimator.GetBool("Hurt") && _grounded && Time.time - _lastHurtTime > 0.5f)
             EndHurt();
     }
-
-
 
     public void StartCasting()
     {
@@ -232,7 +231,7 @@ public class Movement_controller : MonoBehaviour
 
         if (enemies != null)
             foreach (var enemy in enemies)
-                enemy.GetComponent<EnemiesController>().TakeDamage(_damage);
+                enemy.GetComponent<EnemyControllerBase>().TakeDamage(_damage);
     }
 
     private void EndStrike()
@@ -266,13 +265,12 @@ public class Movement_controller : MonoBehaviour
         if (!_strikeCollider.enabled)
             return;
 
-
-        EnemiesController enemy = collision.collider.GetComponent<EnemiesController>();
+        EnemyControllerBase enemy = collision.collider.GetComponent<EnemyControllerBase>();
 
         if (enemy == null || _damageEnemies.Contains(enemy))
             return;
 
-        enemy.TakeDamage(_powerStrikeDamage);
+        enemy.TakeDamage(_powerStrikeDamage, DamageTypes.PowerStrike);
         _damageEnemies.Add(enemy);
     }
 
@@ -322,5 +320,17 @@ public class Movement_controller : MonoBehaviour
         _canMove = true;
         _playerAnimator.SetBool("Hurt", false);
         OnGetHurt(true);
+    }
+
+    public void OnDeathStart()
+    {
+        _canMove = false;
+        _playerAnimator.SetBool("Death", true);
+    }
+
+    public void OnDeathEnd()
+    {
+        
+        Destroy(gameObject);
     }
 }
