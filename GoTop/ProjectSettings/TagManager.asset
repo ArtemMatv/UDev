@@ -21,7 +21,7 @@ TagManager:
   - PlayerProjectiles
   - Ladder
   - EnemyProjectiles
-  - 
+  - EndLvl
   - 
   - 
   - 
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 698957249
+    locked: 0
+  - name: UI
+    uniqueID: 1787042991
     locked: 0

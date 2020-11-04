@@ -166,8 +166,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
+  m_UseAutoMass: 1
+  m_Mass: 1.2315241
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
@@ -272,6 +272,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHP: 100
   _maxMP: 100
+  _coins: 0
+  _hpBar: {fileID: 0}
+  _mpBar: {fileID: 0}
 --- !u!114 &652768029976818233
 MonoBehaviour:
   m_ObjectHideFlags: 0

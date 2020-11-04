@@ -21,6 +21,7 @@ public class EnemyBossController : EnemyArcherController
     private float _currentStrikeRange;
     private bool _fightStarted;
     private EnemyState _stateOnHold;
+    protected bool _inRage = false;
 
     protected override void FixedUpdate()
     {
@@ -162,7 +163,7 @@ public class EnemyBossController : EnemyArcherController
 
     protected override void TryToDamage(Collider2D enemy)
     {
-        if (_currentState == EnemyState.Idle || _currentState == EnemyState.Shoot)
+        if (_currentState == EnemyState.Idle || _currentState == EnemyState.Shoot || _currentState == EnemyState.Hurt)
             return;
 
         Player_controller player = enemy.GetComponent<Player_controller>();
@@ -176,12 +177,16 @@ public class EnemyBossController : EnemyArcherController
     public override void TakeDamage(int damage, DamageTypes type = DamageTypes.Casual, Transform player = null)
     {
         base.TakeDamage(damage, type, player);
-        if (_currentHp < _maxHP / 2 )
-        {
-            Debug.Log("RAGEEEE");
-            _enemyAnimator.SetBool("Rage", true);
-            _damage *= 2;
-        }
+
+        if (!_inRage && _currentHp <= _maxHP / 2)
+            SetRage();
+    }
+
+    protected virtual void SetRage()
+    {
+        _enemyAnimator.SetBool("Rage", true);
+        _inRage = true;
+        _damage *= 2;
     }
 
     protected override void TurnToPlayer()

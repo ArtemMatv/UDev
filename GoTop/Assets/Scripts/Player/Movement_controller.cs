@@ -322,15 +322,21 @@ public class Movement_controller : MonoBehaviour
         OnGetHurt(true);
     }
 
-    public void OnDeathStart()
+    public void OnDeathOrRespawn(bool dead)
     {
-        _canMove = false;
-        _playerAnimator.SetBool("Death", true);
+        _canMove = !dead;
+        _playerAnimator.SetBool("Death", dead);
+        Debug.Log($"death is {dead}");
     }
 
-    public void OnDeathEnd()
+    private void ResetPlayer()
     {
-        
-        Destroy(gameObject);
+        _playerAnimator.SetBool("Strike", false);
+        _playerAnimator.SetBool("PowerStrike", false);
+        _playerAnimator.SetBool("Casting", false);
+        _playerAnimator.SetBool("Hurt", false);
+        _isCasting = false;
+        _isStriking = false;
+        _canMove = true;
     }
 }

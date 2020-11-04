@@ -114,13 +114,4 @@ public class EnemyArcherController : EnemyControllerBase
         base.GetHurt();
     }
 
-    #region PublicMethods
-    public override void TakeDamage(int damage, DamageTypes type = DamageTypes.Casual, Transform player = null)
-    {
-        if (_currentState == EnemyState.PowerStrike && type != DamageTypes.Projectile)
-            return;
-
-        base.TakeDamage(damage, type, player);
-    }
-    #endregion
 }

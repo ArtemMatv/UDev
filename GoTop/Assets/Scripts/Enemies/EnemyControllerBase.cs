@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public abstract class EnemyControllerBase : MonoBehaviour
@@ -9,6 +10,7 @@ public abstract class EnemyControllerBase : MonoBehaviour
     protected EnemyState _currentState;
 
     [Header("HP")]
+    [SerializeField] protected Slider _hpBar;
     [SerializeField] protected int _maxHP;
     protected int _currentHp;
 
@@ -20,7 +22,6 @@ public abstract class EnemyControllerBase : MonoBehaviour
     [SerializeField] private bool _checkRange;
     [SerializeField] private Transform _wallCheck;
     protected bool _faceRight = true;
-    protected bool _canMove = true;
 
     [Header("State changes")]
     [SerializeField] private float _maxStateTime;
@@ -38,7 +39,16 @@ public abstract class EnemyControllerBase : MonoBehaviour
     [Header("Fight Settings")]
     [SerializeField] protected int _hurtDelay;
     private float _lastHurtTime;
-    
+
+    Quaternion _hpBarRotation;
+    void Awake()
+    {
+        _hpBarRotation = _hpBar.transform.rotation;
+    }
+    void LateUpdate()
+    {
+        _hpBar.transform.rotation = _hpBarRotation;
+    }
 
     protected virtual void Start()
     {
@@ -46,6 +56,9 @@ public abstract class EnemyControllerBase : MonoBehaviour
         _enemyRB = GetComponent<Rigidbody2D>();
         _enemyAnimator = GetComponent<Animator>();
         _currentHp = _maxHP;
+        _hpBar.maxValue = _maxHP;
+        _hpBar.value = _maxHP;
+        
     }
 
     protected virtual void FixedUpdate()
@@ -73,8 +86,7 @@ public abstract class EnemyControllerBase : MonoBehaviour
 
     protected virtual void Move()
     {
-        if (_canMove)
-            _enemyRB.velocity = transform.right * new Vector2(_speed, _enemyRB.velocity.y);
+         _enemyRB.velocity = transform.right * new Vector2(_speed, _enemyRB.velocity.y);
     }
 
     protected virtual void Flip()
@@ -170,23 +182,26 @@ public abstract class EnemyControllerBase : MonoBehaviour
             ChangeState(EnemyState.Hurt);
         else
             ChangeState(EnemyState.Death);
+
+        _hpBar.value = _currentHp;
     }
 
     public virtual void GetHurt()
     {
-        _canMove = false;
+        _enemyRB.velocity = Vector2.zero;
         _enemyAnimator.SetBool("Hurt", true);
     }
 
     private void EndHurt()
     {
-        _canMove = true;
         _enemyAnimator.SetBool("Hurt", false);
     }
 
     public void OnDeathStart()
     {
-        _canMove = false;
+        _enemyRB.velocity = Vector2.zero;
+        _enemyRB.bodyType = RigidbodyType2D.Static;
+        GetComponent<Collider2D>().enabled = false;
     }
 
     public void EndDeath()
