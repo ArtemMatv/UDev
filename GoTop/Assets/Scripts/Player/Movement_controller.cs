@@ -19,6 +19,7 @@ public class Movement_controller : MonoBehaviour
 
     [Header("Horizontal movement")]
     [SerializeField] private float _speed;
+    [SerializeField] private float _speedUpper;
 
     [Header("Jumping")]
     [SerializeField] private Transform _groundCheck;
@@ -102,7 +103,7 @@ public class Movement_controller : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
-    public void Move(float move, bool jump, bool crouch, float vervicalMove)
+    public void Move(float move, bool jump, bool crouch, float vervicalMove, bool speedUp)
     {
         #region Ladder
         if (_raising)
@@ -124,7 +125,7 @@ public class Movement_controller : MonoBehaviour
             return;
 
         #region Movement
-        float speedModificator = !_headCollider.enabled ? _crouchSpeedReduce : 1;
+        float speedModificator = !_headCollider.enabled ? _crouchSpeedReduce : speedUp ? _speedUpper : 1;
 
         if ((move != 0 && (_grounded || _airControll)))
         {
@@ -324,9 +325,9 @@ public class Movement_controller : MonoBehaviour
 
     public void OnDeathOrRespawn(bool dead)
     {
+        _playerRD.velocity = Vector2.zero;
         _canMove = !dead;
         _playerAnimator.SetBool("Death", dead);
-        Debug.Log($"death is {dead}");
     }
 
     private void ResetPlayer()

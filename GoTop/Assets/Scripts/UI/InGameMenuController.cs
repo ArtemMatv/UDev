@@ -1,51 +1,39 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameMenuController : MonoBehaviour
+public class InGameMenuController : BaseMenuController
 {
-    ServiceManager _manager;
-
-    [SerializeField] private GameObject _menu;
-    [SerializeField] private Button _resume;
     [SerializeField] private Button _restart;
-    [SerializeField] private Button _settings;
     [SerializeField] private Button _mainMenu;
-    [SerializeField] private Button _quit;
 
-    void Start()
+    protected override void Start()
     {
-        _manager = ServiceManager.Instance;
-
-        _resume.onClick.AddListener(ChangeMenuStatus);
+        base.Start();
+        _play.onClick.AddListener(OnPlayClicked);
         _restart.onClick.AddListener(_manager.Restart);
-        _mainMenu.onClick.AddListener(GoToMainMenu);
-        _quit.onClick.AddListener(_manager.Quit);
+        _mainMenu.onClick.AddListener(OnMainMenuClicked);
     }
 
-    void OnDestroy()
+    protected override void OnDestroy()
     {
-        _resume.onClick.RemoveListener(ChangeMenuStatus);
+        base.OnDestroy();
+        _play.onClick.RemoveListener(OnPlayClicked);
         _restart.onClick.RemoveListener(_manager.Restart);
-        _mainMenu.onClick.RemoveListener(GoToMainMenu);
-        _quit.onClick.RemoveListener(_manager.Quit);
+        _mainMenu.onClick.RemoveListener(OnMainMenuClicked);
     }
 
-    void Update()
+    protected override void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
-            ChangeMenuStatus();
-        
+            OnPlayClicked();
     }
 
-    public void ChangeMenuStatus()
+    protected override void OnPlayClicked()
     {
-        _menu.SetActive(!_menu.activeInHierarchy);
+        base.OnPlayClicked();
         Time.timeScale = _menu.activeInHierarchy ? 0 : 1;
     }
-    private void GoToMainMenu()
+    private void OnMainMenuClicked()
     {
         _manager.ChangeLvl((int)Scenes.MainMenu);
     }

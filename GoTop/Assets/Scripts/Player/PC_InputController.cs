@@ -14,6 +14,7 @@ public class PC_InputController : MonoBehaviour
     bool _jump;
     bool _crouch;
     bool _canAtack;
+    bool _speedUp;
 
     private void Start()
     {
@@ -24,6 +25,7 @@ public class PC_InputController : MonoBehaviour
     void Update()
     {
         _move = Input.GetAxisRaw("Horizontal");
+        _speedUp = Input.GetKey(KeyCode.LeftShift);
         _verticalMove = Input.GetAxisRaw("Vertical");
         if (Input.GetButtonUp("Jump"))
         {
@@ -65,7 +67,7 @@ public class PC_InputController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _playerMovement.Move(_move, _jump, _crouch, _verticalMove);
+        _playerMovement.Move(_move, _jump, _crouch, _verticalMove, _speedUp);
         _jump = false;
     }
 }

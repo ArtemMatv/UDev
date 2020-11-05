@@ -16,6 +16,7 @@ public abstract class LvlEnder : MonoBehaviour
             return;
 
         GetComponent<SpriteRenderer>().sprite = _openClosedTextures[1];
+        PlayerPrefs.SetInt(GamePrefs.Coins.ToString(), collider.GetComponent<Player_controller>().Coins);
         ServiceManager.Instance.EndLevel();
     }
 }

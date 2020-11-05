@@ -20,6 +20,13 @@ public class ServiceManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
+
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            PlayerPrefs.SetInt(GamePrefs.LastLevelPlayed.ToString(), SceneManager.GetActiveScene().buildIndex);
+            PlayerPrefs.SetInt(SceneManager.GetActiveScene().buildIndex + GamePrefs.LevelPlayed.ToString(), 1);
+        }
+            
     }
 
     public void Restart()
@@ -39,14 +46,28 @@ public class ServiceManager : MonoBehaviour
 
     public void Quit()
     {
-        Application.Quit();
         Debug.Log("QUITED");
+        Application.Quit();
+    }
+
+    public void ResetProgress()
+    {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("deleted");
     }
 }
 
 public enum Scenes
 {
     MainMenu,
-    FirstLevel,
-    SecondLevel
+    JustIntroduction,
+    FlyAndSwim,
+    NothingYet
+}
+
+public enum GamePrefs
+{
+    LastLevelPlayed,
+    LevelPlayed,
+    Coins
 }

@@ -10,7 +10,7 @@ public class Player_controller : MonoBehaviour
 
     [SerializeField] private int _maxHP;
     [SerializeField] private int _maxMP;
-    [SerializeField] private int _coins;
+    [SerializeField] public int Coins { get; private set; }
     private int _currentHP;
     private int _currentMP;
 
@@ -35,7 +35,12 @@ public class Player_controller : MonoBehaviour
         _mpBar.maxValue = _maxMP;
         _mpBar.value = _maxMP;
 
-        _coinsBar.text += _coins;
+        if (PlayerPrefs.HasKey(GamePrefs.Coins.ToString()))
+            Coins = PlayerPrefs.GetInt(GamePrefs.Coins.ToString());
+        else
+            PlayerPrefs.SetInt(GamePrefs.Coins.ToString(), 0);
+
+        _coinsBar.text += Coins;
 
         _serviceManager = ServiceManager.Instance;
     }
@@ -105,7 +110,7 @@ public class Player_controller : MonoBehaviour
 
     public void AddCoins(int coins)
     {
-        _coins += coins;
-        _coinsBar.text = "Coins: " + _coins;
+        Coins += coins;
+        _coinsBar.text = "Coins: " + Coins;
     }
 }

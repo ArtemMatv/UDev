@@ -174,7 +174,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &652768029976818212
 CapsuleCollider2D:
@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
+  _speedUpper: 2
   _groundCheck: {fileID: 652768029711758992}
   _jumpForce: 500
   _airControll: 1
@@ -272,9 +273,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHP: 100
   _maxMP: 100
-  _coins: 0
   _hpBar: {fileID: 0}
   _mpBar: {fileID: 0}
+  _coinsBar: {fileID: 0}
 --- !u!114 &652768029976818233
 MonoBehaviour:
   m_ObjectHideFlags: 0
