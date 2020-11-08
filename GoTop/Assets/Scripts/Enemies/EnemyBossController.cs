@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBossController : EnemyArcherController
 {
+    public event Action OnDeathAnswer = delegate { };
+
     [Header("Strike")]
     [SerializeField] private Transform _strikePoint;
     [SerializeField] private int _damage;
@@ -157,7 +160,7 @@ public class EnemyBossController : EnemyArcherController
 
     protected void ChooseNextAttackState()
     {
-        int state = Random.Range(0, _attackStates.Length);
+        int state = UnityEngine.Random.Range(0, _attackStates.Length);
         ChangeState(_attackStates[state]);
     }
 
@@ -196,5 +199,11 @@ public class EnemyBossController : EnemyArcherController
         {
             Flip();
         }
+    }
+
+    public override void EndDeath()
+    {
+        OnDeathAnswer();
+        base.EndDeath();
     }
 }

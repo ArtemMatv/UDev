@@ -204,7 +204,7 @@ public abstract class EnemyControllerBase : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
     }
 
-    public void EndDeath()
+    public virtual void EndDeath()
     {
         Destroy(gameObject);
     }

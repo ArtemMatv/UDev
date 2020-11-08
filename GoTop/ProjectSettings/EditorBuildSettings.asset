@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/2.unity
     guid: 1ed4fc5352aeb234a89b94d339b6beb4
+  - enabled: 1
+    path: Assets/Scenes/3.unity
+    guid: 90c32b308a509ae4295b0471d7301106
+  - enabled: 1
+    path: Assets/Scenes/Congradulations.unity
+    guid: c1642aeeb745c58448259294269a87b4
   m_configObjects: {}

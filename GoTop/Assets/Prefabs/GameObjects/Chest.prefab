@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2409885736357879969}
   - component: {fileID: 2032348946450901686}
   - component: {fileID: 8653624597540065139}
-  m_Layer: 0
+  - component: {fileID: 4893766029839490864}
+  m_Layer: 11
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,3 +99,29 @@ MonoBehaviour:
   - {fileID: 21300010, guid: ae3918a914038694d852d0bb81f62473, type: 3}
   - {fileID: 21300012, guid: ae3918a914038694d852d0bb81f62473, type: 3}
   _coins: 10
+--- !u!61 &4893766029839490864
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7492691216507430718}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.47916666, y: 0.3125}
+    newSize: {x: 0.47916666, y: 0.3125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.47916666, y: 0.3125}
+  m_EdgeRadius: 0

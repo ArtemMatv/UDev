@@ -60,9 +60,9 @@ public class ServiceManager : MonoBehaviour
 public enum Scenes
 {
     MainMenu,
-    JustIntroduction,
-    FlyAndSwim,
-    NothingYet
+    JustIntroduction1,
+    BigPlay2,
+    TryNotToDie3
 }
 
 public enum GamePrefs

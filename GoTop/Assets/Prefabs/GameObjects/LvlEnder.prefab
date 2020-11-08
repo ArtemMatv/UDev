@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1957529318014954231}
   - component: {fileID: 1957529318014954232}
   - component: {fileID: 1957529318014954233}
-  - component: {fileID: 1957529318014954230}
   m_Layer: 16
   m_Name: LvlEnder
   m_TagString: Untagged
@@ -109,18 +108,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.0303328, y: 0.97607183}
   m_EdgeRadius: 0
---- !u!114 &1957529318014954230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957529318014954234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1bd0d79a3124845926cb0b6649bee0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _openClosedTextures:
-  - {fileID: 21300002, guid: ae3918a914038694d852d0bb81f62473, type: 3}
-  - {fileID: 21300004, guid: ae3918a914038694d852d0bb81f62473, type: 3}
