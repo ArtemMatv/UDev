@@ -23,7 +23,7 @@ public abstract class BaseMenuController : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        _quit.onClick.RemoveListener(_manager.Quit);
+        _quit.onClick.RemoveAllListeners();
     }
 
     protected virtual void Update() { }

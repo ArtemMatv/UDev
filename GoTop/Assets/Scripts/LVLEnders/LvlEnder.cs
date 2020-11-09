@@ -1,22 +1,30 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public abstract class LvlEnder : MonoBehaviour
+[RequireComponent(typeof(SpriteChanger))]
+public class LvlEnder : MonoBehaviour
 {
-    [SerializeField] private Sprite[] _openClosedTextures;
+    private SpriteChanger _spriteChanger;
     private bool _opened = false;
 
     protected virtual void Start()
     {
-        GetComponent<SpriteRenderer>().sprite = _openClosedTextures[0];
+        _spriteChanger = GetComponent<SpriteChanger>();
     }
-    public virtual void Open() => _opened = true;
+
+    public virtual void Open()
+    {
+        _spriteChanger.ChangeTexture();
+        _opened = true;
+    }
     protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
         if (!_opened)
             return;
 
-        GetComponent<SpriteRenderer>().sprite = _openClosedTextures[1];
-        PlayerPrefs.SetInt(GamePrefs.Coins.ToString(), collider.GetComponent<Player_controller>().Coins);
         ServiceManager.Instance.EndLevel();
     }
 }
+

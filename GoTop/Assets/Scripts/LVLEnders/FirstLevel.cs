@@ -6,7 +6,7 @@ public class FirstLevel : LvlEnder
 {
     protected override void Start()
     {
-        Open();
         base.Start();
+        Open();
     }
 }

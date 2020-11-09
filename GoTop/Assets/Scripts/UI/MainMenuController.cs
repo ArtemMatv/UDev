@@ -24,6 +24,9 @@ public class MainMenuController : BaseMenuController
         { 
             _play.GetComponentInChildren<TMP_Text>().text = "Resume";
             lvl = PlayerPrefs.GetInt(GamePrefs.LastLevelPlayed.ToString());
+
+            if (lvl == (int)Scenes.FinalScene)
+                lvl--;
         }
 
         _play.onClick.AddListener(OnPlayClicked);

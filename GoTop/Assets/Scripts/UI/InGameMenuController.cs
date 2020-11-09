@@ -18,7 +18,7 @@ public class InGameMenuController : BaseMenuController
     {
         base.OnDestroy();
         _play.onClick.RemoveListener(OnPlayClicked);
-        _restart.onClick.RemoveListener(_manager.Restart);
+        _restart.onClick.RemoveAllListeners();
         _mainMenu.onClick.RemoveListener(OnMainMenuClicked);
     }
 

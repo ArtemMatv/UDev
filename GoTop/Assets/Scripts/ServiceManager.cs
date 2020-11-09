@@ -46,14 +46,12 @@ public class ServiceManager : MonoBehaviour
 
     public void Quit()
     {
-        Debug.Log("QUITED");
         Application.Quit();
     }
 
     public void ResetProgress()
     {
         PlayerPrefs.DeleteAll();
-        Debug.Log("deleted");
     }
 }
 
@@ -62,7 +60,8 @@ public enum Scenes
     MainMenu,
     JustIntroduction1,
     BigPlay2,
-    TryNotToDie3
+    TryNotToDie3,
+    FinalScene
 }
 
 public enum GamePrefs

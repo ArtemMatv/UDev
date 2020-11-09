@@ -1,16 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteChanger))]
 public class ChestController : MonoBehaviour
 {
-    [SerializeField] private Sprite[] _openClosedTextures;
+    public event Action OnOpen = delegate { };
+
+    private SpriteChanger _spriteChanger;
     [SerializeField] private int _coins;
     private bool _opened = false;
 
-    protected virtual void Start()
+    protected virtual void Start() 
     {
-        GetComponent<SpriteRenderer>().sprite = _openClosedTextures[0];
+        _spriteChanger = GetComponent<SpriteChanger>();
     }
     protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
@@ -18,7 +22,8 @@ public class ChestController : MonoBehaviour
             return;
 
         _opened = true;
-        GetComponent<SpriteRenderer>().sprite = _openClosedTextures[1];
+        _spriteChanger.ChangeTexture();
         collider.GetComponent<Player_controller>().AddCoins(_coins);
+        OnOpen();
     }
 }
