@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(AudioSource))]
+[RequireComponent(typeof(Player_controller))]
 public class Movement_controller : MonoBehaviour
 {
     public event Action<bool> OnGetHurt = delegate { };
@@ -62,7 +63,6 @@ public class Movement_controller : MonoBehaviour
     [SerializeField] private int _powerStrikeCost;
     private List<EnemyControllerBase> _damageEnemies = new List<EnemyControllerBase>();
 
-
     [Header("Lader")]
     [SerializeField] private LayerMask _whatIsLadder;
     [SerializeField] private float _ladderSpeed;
@@ -73,6 +73,9 @@ public class Movement_controller : MonoBehaviour
     [SerializeField] private Transform _goDownCheck;
     private bool _raising = false;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource _audioSource;
+
     [SerializeField] private float _pushForce;
     private float _lastHurtTime;
 
@@ -81,6 +84,7 @@ public class Movement_controller : MonoBehaviour
         _playerRD = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
         _playerController = GetComponent<Player_controller>();
+        _audioSource = GetComponent<AudioSource>();
         _gravity = _playerRD.gravityScale;
     }
 
@@ -153,10 +157,21 @@ public class Movement_controller : MonoBehaviour
             _headCollider.enabled = !crouch;
         #endregion
 
-       #region Animation
+        #region Animation
         _playerAnimator.SetFloat("Speed", Mathf.Abs(move));
         _playerAnimator.SetBool("Jump", !_grounded);
         _playerAnimator.SetBool("Crouch", !_headCollider.enabled);
+        #endregion
+
+        #region Audio
+        if (_grounded && _playerRD.velocity.x != 0 && !_audioSource.isPlaying)
+        {
+            _audioSource.Play();
+        }
+        else if (!(_grounded && _playerRD.velocity.x != 0))
+        {
+            _audioSource.Stop();
+        }
         #endregion
     }
 
