@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class MainMenuController : BaseMenuController
 {
+    [Header("Levels")]
     [SerializeField] private Button _chooseLvl;
     [SerializeField] private Button _reset;
 

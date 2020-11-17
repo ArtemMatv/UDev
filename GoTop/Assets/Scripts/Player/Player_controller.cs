@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -78,6 +79,15 @@ public class Player_controller : MonoBehaviour
             _currentHP = _maxHP;
 
         _hpBar.value = _currentHP;
+    }
+
+    public void RestoreMP(int mp)
+    {
+        _currentMP += mp;
+        if (_currentMP > _maxMP)
+            _currentMP = _maxMP;
+
+        _mpBar.value = _currentMP;
     }
 
     public bool ChangeMP(int value)

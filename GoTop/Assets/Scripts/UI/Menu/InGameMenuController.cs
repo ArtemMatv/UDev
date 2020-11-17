@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class InGameMenuController : BaseMenuController
 {
+    [Header("OtherButtons")]
     [SerializeField] private Button _restart;
     [SerializeField] private Button _mainMenu;
 

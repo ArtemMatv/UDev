@@ -63,7 +63,7 @@ public class Movement_controller : MonoBehaviour
     [SerializeField] private int _powerStrikeCost;
     private List<EnemyControllerBase> _damageEnemies = new List<EnemyControllerBase>();
 
-    [Header("Lader")]
+    [Header("Ladder")]
     [SerializeField] private LayerMask _whatIsLadder;
     [SerializeField] private float _ladderSpeed;
     [SerializeField] private Collider2D[] _collidersToDisable;
@@ -73,11 +73,17 @@ public class Movement_controller : MonoBehaviour
     [SerializeField] private Transform _goDownCheck;
     private bool _raising = false;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource _audioSource;
-
+    [Header("Hurt")]
     [SerializeField] private float _pushForce;
     private float _lastHurtTime;
+
+    [Header("Audio")]
+    [SerializeField] private InGameSound _runClip;
+    [SerializeField] private InGameSound _hurtClip;
+    [SerializeField] private InGameSound _jumpClip;
+    [SerializeField] private InGameSound _dieClip;
+    [SerializeField] private AudioSource _audioSource;
+    private InGameSound _currentSound;
 
     void Start()
     {
@@ -164,15 +170,43 @@ public class Movement_controller : MonoBehaviour
         #endregion
 
         #region Audio
-        if (_grounded && _playerRD.velocity.x != 0 && !_audioSource.isPlaying)
+        if (_grounded && _playerRD.velocity.x != 0 && !_audioSource.isPlaying && move != 0)
         {
-            _audioSource.Play();
+            PlayAudio(_runClip);
         }
-        else if (!(_grounded && _playerRD.velocity.x != 0))
+        else if (!(_grounded && _playerRD.velocity.x != 0) || move == 0)
         {
-            _audioSource.Stop();
+            StopSound(_runClip);
         }
+
+        if (_grounded && jump)
+            PlayAudio(_jumpClip);
+        else if (!_grounded)
+            StopSound(_jumpClip);
         #endregion
+    }
+
+    public void PlayAudio(InGameSound sound)
+    {
+        if (_currentSound != null && (_currentSound == sound || _currentSound.Priority > sound.Priority))
+            return;
+
+        _currentSound = sound;
+        _audioSource.clip = _currentSound.AudioClip;
+        _audioSource.loop = _currentSound.Loop;
+        _audioSource.pitch = _currentSound.Pitch;
+        _audioSource.volume = _currentSound.Volume;
+        _audioSource.Play();
+    }
+
+    public void StopSound(InGameSound sound)
+    {
+        if (_currentSound == null || _currentSound != sound)
+            return;
+
+        _audioSource.Stop();
+        _audioSource.clip = null;
+        _currentSound = null;
     }
 
     private void FixedUpdate()
@@ -185,7 +219,7 @@ public class Movement_controller : MonoBehaviour
                 _canMove = true;
                 _raising = false;
                 _playerRD.gravityScale = _gravity;
-                
+
                 foreach (Collider2D collider in _collidersToDisable)
                 {
                     collider.enabled = true;
@@ -310,7 +344,7 @@ public class Movement_controller : MonoBehaviour
 
     private void EndAnimation()
     {
-        
+
         _playerAnimator.SetBool("Strike", false);
         _playerAnimator.SetBool("PowerStrike", false);
         _playerAnimator.SetBool("Casting", false);
@@ -320,6 +354,8 @@ public class Movement_controller : MonoBehaviour
 
     public void GetHurt(Vector2 position)
     {
+        PlayAudio(_hurtClip);
+
         _lastHurtTime = Time.time;
         _canMove = false;
         OnGetHurt(false);
@@ -333,6 +369,8 @@ public class Movement_controller : MonoBehaviour
 
     private void EndHurt()
     {
+        StopSound(_hurtClip);
+
         _canMove = true;
         _playerAnimator.SetBool("Hurt", false);
         OnGetHurt(true);
@@ -340,6 +378,11 @@ public class Movement_controller : MonoBehaviour
 
     public void OnDeathOrRespawn(bool dead)
     {
+        if (_currentSound == _dieClip)
+            StopSound(_dieClip);
+        else
+            PlayAudio(_dieClip);
+
         _playerRD.velocity = Vector2.zero;
         _canMove = !dead;
         _playerAnimator.SetBool("Death", dead);

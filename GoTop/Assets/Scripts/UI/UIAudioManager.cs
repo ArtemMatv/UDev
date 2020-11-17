@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class UIAudioManager : MonoBehaviour
 {
-    [SerializeField] private Sound[] _sounds;
+    [SerializeField] private UISound[] _sounds;
+
+    [SerializeField] private AudioMixerGroup _audioMixerGroup;
 
     public static UIAudioManager Instance;
 
@@ -21,13 +24,14 @@ public class UIAudioManager : MonoBehaviour
 
     void Start()
     {
-        foreach(Sound s in _sounds)
+        foreach(UISound s in _sounds)
         {
             s.AudioSource = gameObject.AddComponent<AudioSource>();
             s.AudioSource.clip = s.AudioClip;
             s.AudioSource.volume = s.Volume;
             s.AudioSource.pitch = s.Pitch;
             s.AudioSource.loop = s.Loop;
+            s.AudioSource.outputAudioMixerGroup = _audioMixerGroup;
         }
     }
 

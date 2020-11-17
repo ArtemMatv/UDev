@@ -65,7 +65,8 @@
      <Compile Include="Assets\Scripts\Enemies\EnemyProjectileController.cs" />
      <Compile Include="Assets\Scripts\Helpers.cs" />
      <Compile Include="Assets\Scripts\HorizontalMover.cs" />
-     <Compile Include="Assets\Scripts\ItemPicker.cs" />
+     <Compile Include="Assets\Scripts\Items\HPRestorer.cs" />
+     <Compile Include="Assets\Scripts\Items\MPRestorer.cs" />
      <Compile Include="Assets\Scripts\LVLEnders\FirstLevel.cs" />
      <Compile Include="Assets\Scripts\LVLEnders\LvlEnder.cs" />
      <Compile Include="Assets\Scripts\LVLEnders\SecondLevel.cs" />
@@ -75,12 +76,15 @@
      <Compile Include="Assets\Scripts\Player\Player_controller.cs" />
      <Compile Include="Assets\Scripts\Player\ProjectileController.cs" />
      <Compile Include="Assets\Scripts\ServiceManager.cs" />
-     <Compile Include="Assets\Scripts\Sound.cs" />
      <Compile Include="Assets\Scripts\SpriteChanger.cs" />
      <Compile Include="Assets\Scripts\UI\LvlButtonController.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\BaseMenuController.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\InGameMenuController.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\MainMenuController.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\SettingsMenuController.cs" />
+     <Compile Include="Assets\Scripts\UI\Sound\InGameSound.cs" />
+     <Compile Include="Assets\Scripts\UI\Sound\Sound.cs" />
+     <Compile Include="Assets\Scripts\UI\Sound\UISound.cs" />
      <Compile Include="Assets\Scripts\UI\UIAudioManager.cs" />
      <None Include="Assets\Sprites\Knight Files\Read Me.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

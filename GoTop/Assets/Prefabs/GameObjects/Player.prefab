@@ -257,10 +257,34 @@ MonoBehaviour:
   - {fileID: 652768029976818215}
   - {fileID: 652768029976818212}
   _raiseCheck: {fileID: 652768030827003871}
-  _raiseCheckHeight: 0.5
+  _raiseCheckHeight: 0.7
   _goDownCheck: {fileID: 652768030261205784}
-  _audioSource: {fileID: 0}
   _pushForce: 5
+  _runClip:
+    AudioClip: {fileID: 8300000, guid: 69a1cba5022b43b478202d9b934c61bb, type: 3}
+    Volume: 0.108
+    Pitch: 1
+    Loop: 1
+    Priority: 1
+  _hurtClip:
+    AudioClip: {fileID: 8300000, guid: d21348b129ffe7c4fb5adbf4e73063df, type: 3}
+    Volume: 0.588
+    Pitch: 1
+    Loop: 0
+    Priority: 5
+  _jumpClip:
+    AudioClip: {fileID: 8300000, guid: dc12b3fea9c332f4a88d3b03843cf9c7, type: 3}
+    Volume: 0.351
+    Pitch: 1
+    Loop: 0
+    Priority: 2
+  _dieClip:
+    AudioClip: {fileID: 8300000, guid: 892b3dd3266fe6043a78b0d9e35efc20, type: 3}
+    Volume: 0.426
+    Pitch: 1
+    Loop: 0
+    Priority: 100
+  _audioSource: {fileID: 5803841395129735311}
 --- !u!114 &652768029976818235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,11 +343,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 027c416d83fd7094f8a75bb58d331ea3, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.12
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
