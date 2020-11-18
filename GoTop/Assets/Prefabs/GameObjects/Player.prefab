@@ -303,8 +303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786bdfaa363b1044dbe48d26b701cd4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHP: 100
-  _maxMP: 100
+  _maxHP: 150
+  _maxMP: 150
   _hpBar: {fileID: 0}
   _mpBar: {fileID: 0}
   _coinsBar: {fileID: 0}
