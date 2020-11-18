@@ -80,8 +80,10 @@ public class Movement_controller : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private InGameSound _runClip;
     [SerializeField] private InGameSound _hurtClip;
+    public InGameSound HurtClip { get => _hurtClip; }
     [SerializeField] private InGameSound _jumpClip;
     [SerializeField] private InGameSound _dieClip;
+    [SerializeField] private InGameSound _swordClip;
     [SerializeField] private AudioSource _audioSource;
     private InGameSound _currentSound;
 
@@ -273,6 +275,7 @@ public class Movement_controller : MonoBehaviour
             _playerAnimator.SetBool("Strike", true);
 
         _isStriking = true;
+        PlayAudio(_swordClip);
     }
 
     private void Strike()
@@ -288,6 +291,7 @@ public class Movement_controller : MonoBehaviour
     {
         _isStriking = false;
         _playerAnimator.SetBool("Strike", false);
+        StopSound(_swordClip);
     }
 
     private void StartPowerStrike()
@@ -305,6 +309,7 @@ public class Movement_controller : MonoBehaviour
 
     private void EndPowerStrike()
     {
+        StopSound(_swordClip);
         _playerAnimator.SetBool("PowerStrike", false);
         _isStriking = false;
         _canMove = true;

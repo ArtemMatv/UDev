@@ -284,6 +284,12 @@ MonoBehaviour:
     Pitch: 1
     Loop: 0
     Priority: 100
+  _swordClip:
+    AudioClip: {fileID: 8300000, guid: 7e37342733e4a8f47996713568310218, type: 3}
+    Volume: 0.206
+    Pitch: 1
+    Loop: 0
+    Priority: 3
   _audioSource: {fileID: 5803841395129735311}
 --- !u!114 &652768029976818235
 MonoBehaviour:
