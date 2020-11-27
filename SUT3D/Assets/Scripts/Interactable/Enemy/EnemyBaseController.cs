@@ -1,11 +1,10 @@
-﻿public class EnemyBaseController : Interactable
-{
-    public string Name { get; private set; }
+﻿using UnityEngine;
 
-    public EnemyBaseController(string name)
-    {
-        Name = name;
-    }
+public abstract class EnemyBaseController : Interactable
+{
+    [SerializeField] private string _name;
+    public string Name => _name;
+
     public override void Interact()
     {
         CalculateOutcome();

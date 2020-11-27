@@ -1,11 +1,12 @@
-﻿public class HeroArmyController : ArmyController
+﻿using System;
+using UnityEngine;
+
+[Serializable]
+public class HeroArmyController : ArmyController
 {
-    private Hero _hero;
-    public HeroArmyController(string name, Hero enemyHero, EnemiesTypes[] types, params int[] amounts)
-        : base(name, types, amounts)
-    {
-        _hero = enemyHero;
-    }
+    [SerializeField] private Hero _armyHero;
+    public Hero ArmyHero => _armyHero;
+
     protected virtual void Move()
     {
         //move close to nest
