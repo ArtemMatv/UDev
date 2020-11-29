@@ -17,7 +17,7 @@ public abstract class BaseMenuController : MonoBehaviour
     [SerializeField] protected Button _quit;
 
     [Header("Settings")]
-    [SerializeField] protected GameObject _settingsMenu;
+    [SerializeField] protected SettingsMenuController _settingsMenu;
     [SerializeField] protected Button _closeSettingsButton;
 
     // Start is called before the first frame update
@@ -53,7 +53,7 @@ public abstract class BaseMenuController : MonoBehaviour
     protected virtual void OnSettingsClicked()
     {
         _audioManager.Play(UIClipNames.Settings);
-        _settingsMenu.SetActive(!_settingsMenu.activeInHierarchy);
+        _settingsMenu.CloseMenu();
     }
 
     protected virtual void OnQuitClicked()

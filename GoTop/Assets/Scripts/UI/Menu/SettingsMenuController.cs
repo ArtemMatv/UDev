@@ -33,15 +33,12 @@ public class SettingsMenuController : MonoBehaviour
     void Start()
     {
         #region ApplyButton
-        _masterMixer.GetFloat("Volume", out float _selectedVolume);
+        _masterMixer.GetFloat("Volume", out _selectedVolume);
         _selectedFullScreen = Screen.fullScreen;
         _selectedResolution = Screen.currentResolution;
         _selectedQuality = QualitySettings.GetQualityLevel();
 
-        _apply.onClick.AddListener(ChangeVolume);
-        _apply.onClick.AddListener(ChangeFullScreen);
-        _apply.onClick.AddListener(ChangeResolution);
-        _apply.onClick.AddListener(ChangeQuality);
+        _apply.onClick.AddListener(OnApplyButtonClicked);
         #endregion
 
         #region Volume
@@ -104,19 +101,9 @@ public class SettingsMenuController : MonoBehaviour
         _selectedVolume = value;
     }
 
-    private void ChangeVolume()
-    {
-        _masterMixer.SetFloat("Volume", _selectedVolume);
-    }
-
     private void OnFullScreenChanged(bool value)
     {
         _selectedFullScreen = value;
-    }
-
-    private void ChangeFullScreen()
-    {
-        Screen.fullScreen = _selectedFullScreen;
     }
 
     private void OnResolutionChanged(int index)
@@ -124,20 +111,32 @@ public class SettingsMenuController : MonoBehaviour
         _selectedResolution = _availableResolutions[index];
     }
 
-    private void ChangeResolution()
-    {
-        Screen.SetResolution(_selectedResolution.width,
-                             _selectedResolution.height,
-                             Screen.fullScreen);
-    }
-
     private void OnQualityChanged(int index)
     {
         _selectedQuality = index;
     }
 
-    private void ChangeQuality()
+    private void OnApplyButtonClicked()
     {
         QualitySettings.SetQualityLevel(_selectedQuality);
+
+        Screen.SetResolution(_selectedResolution.width,
+                             _selectedResolution.height,
+                             Screen.fullScreen);
+
+        Screen.fullScreen = _selectedFullScreen;
+
+        _masterMixer.SetFloat("Volume", _selectedVolume);
+
+        gameObject.SetActive(!gameObject.activeInHierarchy);
+    }
+
+    public void CloseMenu()
+    {
+        _masterMixer.GetFloat("Volume", out _selectedVolume);
+        _selectedFullScreen = Screen.fullScreen;
+        _selectedResolution = Screen.currentResolution;
+        _selectedQuality = QualitySettings.GetQualityLevel();
+        gameObject.SetActive(!gameObject.activeInHierarchy);
     }
 }

@@ -49,10 +49,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -74,8 +72,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Slider
     - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
-    com.unity.multiplayer-hlapi.Runtime.dll:
-    - UnityEngine.Networking.NetworkCallbacks
   sceneClasses:
     Assets/Scenes/0. Main menu.unity:
     - Class: 1
@@ -1193,7 +1189,7 @@ ScriptsOnlyBuild:
     className: TextContainer
   - hash:
       serializedVersion: 2
-      Hash: 6294b674671195565211683f126dcfb8
+      Hash: 4728681263e859445b4429cdfd081ec9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: InGameMenuController
@@ -1211,7 +1207,7 @@ ScriptsOnlyBuild:
     className: CinemachineTargetGroup
   - hash:
       serializedVersion: 2
-      Hash: c5cae7e7bb5733fec769e42ebd5d10d9
+      Hash: e24bab673d6bd24277749afb3b5f3d5d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MainMenuController
@@ -1642,4 +1638,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/2.unity
   - Assets/Scenes/3.unity
   - Assets/Scenes/Congradulations.unity
-  playerPath: "C:/Users/\u0410\u0440\u0442\u0435\u043C/Documents/Unity projects/UDev/UDev/GoTop/Builded/GoTop.exe"
+  playerPath: "C:/Users/\u0410\u0440\u0442\u0435\u043C/Documents/Unity projects/UDev/UDev/GoTop/Build/GoTop.exe"
