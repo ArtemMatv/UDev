@@ -1,24 +1,21 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class BlacksmithController : VillagerController
 {
-    private List<ItemBaseController> Items { get; set; }
+    [SerializeField] protected List<ItemBaseController> _items;
 
-    public BlacksmithController(string _name) : base(_name)
+    public void Trade()
     {
-        this.Health = 100;
-        this.Messages = new List<string> { "Hello", "Wanna trade?" };
-        this.Name = _name;
-        this.Role = "Blacksmith";
-    }
-
-    private void Trade()
-    {
+        //An option in interact
         // trade with player
     }
 
-    private void Create()
+    public void Create()
     {
+        //An option in interact
         // create something for player
     }
+
+
 }

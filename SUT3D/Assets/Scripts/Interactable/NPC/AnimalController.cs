@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class AnimalController : NPCBaseController
 {
-    public AnimalController(string _name)
-    {
-        this.Health = 100;
-        this.Messages = new List<string> { "Ghaf", "Ghaf Ghaf" };
-        this.Name = _name;
-        this.Role = "Animal";
-    }
-
+    //you can not attack other npc
+    [SerializeField] protected int _health;
+    
     protected override void Move()
     {
-        // move in the village only
+        // move outside the village only
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
     }
 }

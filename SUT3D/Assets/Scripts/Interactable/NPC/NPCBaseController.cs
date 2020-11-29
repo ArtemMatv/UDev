@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class NPCBaseController : Interactable
 {
-    protected string Name { get; set; }
-    protected string Role { get; set; }
-    protected int Health { get; set; }
-    protected List<string> Messages { get; set; }
+    [SerializeField] protected string _name;
+    [SerializeField] protected string _role;
+    [SerializeField] protected List<string> _messages;
+
+    public string Role => _role;
+    public List<string> Messages => _messages;
+    public string Name => _name;
 
     protected virtual void Move() { }
 
