@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
         if (_agent.remainingDistance <= focus?.GetRadius())
         {
+            _agent.SetDestination(gameObject.transform.position);
             focus.Interact();
             SetFocus(null);
         }
