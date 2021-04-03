@@ -481,6 +481,7 @@ MonoBehaviour:
   _button: {fileID: 345350210}
   _buttonText: {fileID: 1715119094}
   _message: {fileID: 114705694}
+  _radius: 1
 --- !u!1 &345350208
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,6 +786,7 @@ MonoBehaviour:
   _button: {fileID: 345350210}
   _buttonText: {fileID: 1715119094}
   _message: {fileID: 114705694}
+  _radius: 1
 --- !u!1 &1197967352 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100142, guid: 7e35bd5abf60a234798b95ef300f64e2,
@@ -821,6 +823,7 @@ MonoBehaviour:
   _button: {fileID: 345350210}
   _buttonText: {fileID: 1715119094}
   _message: {fileID: 114705694}
+  _radius: 3
 --- !u!23 &1233722994
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2245,6 +2248,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 936113198879122643, guid: b121a50321a77fb4aabcddde0cb90bf5,
+        type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 534669904}
+    - target: {fileID: 936113198879122643, guid: b121a50321a77fb4aabcddde0cb90bf5,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1717203606}
+    - target: {fileID: 936113198879122643, guid: b121a50321a77fb4aabcddde0cb90bf5,
+        type: 3}
+      propertyPath: scanRadius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 936113198879122643, guid: b121a50321a77fb4aabcddde0cb90bf5,
+        type: 3}
+      propertyPath: interactables.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 1770752276088728211, guid: b121a50321a77fb4aabcddde0cb90bf5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2330,6 +2353,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3737968324541305531, guid: b121a50321a77fb4aabcddde0cb90bf5,
+        type: 3}
+      propertyPath: _agent
+      value: 
+      objectReference: {fileID: 1717203611}
+    - target: {fileID: 3737968324541305531, guid: b121a50321a77fb4aabcddde0cb90bf5,
+        type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 1717203604}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 1770752276088728210, guid: b121a50321a77fb4aabcddde0cb90bf5, type: 3}
@@ -2350,7 +2383,7 @@ Animator:
   m_GameObject: {fileID: 1717203603}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d1fdcc8044247cb4c82b2f020e982956, type: 2}
+  m_Controller: {fileID: 9100000, guid: 769d641c351b7b84b9dedd3300684c5a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2359,11 +2392,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1717203606
+--- !u!114 &1717203606 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3737968324541305531, guid: b121a50321a77fb4aabcddde0cb90bf5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1717203602}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717203603}
   m_Enabled: 1
@@ -2371,12 +2404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaefff3e05daa2046a7ef3af35eb79c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 534669904}
-  _agent: {fileID: 1717203611}
-  _animator: {fileID: 1717203604}
-  interactables:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!195 &1717203611
 NavMeshAgent:
   m_ObjectHideFlags: 0

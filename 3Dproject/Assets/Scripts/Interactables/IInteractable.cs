@@ -9,5 +9,6 @@ namespace Assets
     public interface IInteractable
     {
         void Interact();
+        float GetRadius();
     }
 }

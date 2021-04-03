@@ -9,23 +9,40 @@ using UnityEngine.UI;
 
 namespace Assets.Interactables
 {
-    class Item : MonoBehaviour, IInteractable
+    class NPC : MonoBehaviour, IInteractable
     {
         [SerializeField] private Canvas canvas;
         [SerializeField] private Button _button;
         [SerializeField] private TMP_Text _buttonText;
         [SerializeField] private TMP_Text _message;
+        [SerializeField] private float _radius;
+
+        public float GetRadius()
+        {
+            return _radius;
+        }
+
         public void Interact()
         {
             Time.timeScale = 0;
-            _message.text = "Great sword!!!";
-            _buttonText.text = "Take";
-            _button.onClick.AddListener(() => { 
+
+            _message.text = "Madara Uchiha";
+
+            _buttonText.text = "Talk";
+
+            _button.onClick.AddListener(() => {
                 canvas.gameObject.SetActive(false);
                 Time.timeScale = 1;
-                Destroy(gameObject);
+                _button.onClick.RemoveAllListeners();
             });
+
             canvas.gameObject.SetActive(true);
+        }
+
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(gameObject.transform.position, _radius);
         }
     }
 }
