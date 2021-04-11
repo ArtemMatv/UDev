@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Animator _animator;
-    private IInteractable focus;
+    private IInteractable focus = null;
 
     void Update()
     {

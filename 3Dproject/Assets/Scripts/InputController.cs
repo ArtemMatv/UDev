@@ -13,7 +13,7 @@ public class InputController : MonoBehaviour
     [SerializeField] private LayerMask interactables;
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
         {
