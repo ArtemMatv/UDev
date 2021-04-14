@@ -4,13 +4,22 @@ using UnityEngine.AI;
 using UnityEngine;
 using Assets;
 using UnityEngine.EventSystems;
+using InventoryNS;
+using Assets.Interactables;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Animator _animator;
+    [SerializeField] private int _inventoryCapacity;
+    private Inventory inventory;
     private IInteractable focus = null;
+    
 
+    private void Start()
+    {
+        inventory = new Inventory(_inventoryCapacity);
+    }
     void Update()
     {
         if (_agent.remainingDistance <= _agent.stoppingDistance)
@@ -22,6 +31,10 @@ public class PlayerController : MonoBehaviour
         {
             _agent.SetDestination(gameObject.transform.position);
             focus.Interact();
+
+            if (focus is Item)
+                (focus as Item).PickUpTarget = inventory;  
+            
             SetFocus(null);
         }
     }
@@ -40,5 +53,13 @@ public class PlayerController : MonoBehaviour
     void SetFocus(IInteractable interactable)
     {
         focus = interactable;
+    }
+
+    public Inventory GetInventory()
+    {
+        if (inventory == null)
+            inventory = new Inventory(_inventoryCapacity);
+
+        return inventory;
     }
 }

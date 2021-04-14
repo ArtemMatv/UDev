@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InventoryNS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,8 @@ namespace Assets.Interactables
         [SerializeField] private TMP_Text _buttonText;
         [SerializeField] private TMP_Text _message;
         [SerializeField] private float _radius;
+        [SerializeField] private InventoryItem _item;
+        public Inventory PickUpTarget { private get; set; }
 
         public float GetRadius()
         {
@@ -30,14 +33,19 @@ namespace Assets.Interactables
 
             _buttonText.text = "Take";
 
-            _button.onClick.AddListener(() => { 
-                canvas.gameObject.SetActive(false);
-                Time.timeScale = 1;
-                _button.onClick.RemoveAllListeners();
-                Destroy(gameObject);
-            });
+            _button.onClick.AddListener(OnClickListener);
 
             canvas.gameObject.SetActive(true);
+        }
+
+        void OnClickListener()
+        {
+            canvas.gameObject.SetActive(false);
+            Time.timeScale = 1;
+            _button.onClick.RemoveAllListeners();
+
+            if (PickUpTarget.AddToInventory(_item))
+                Destroy(gameObject);
         }
 
         void OnDrawGizmos()

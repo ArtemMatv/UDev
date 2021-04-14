@@ -1,4 +1,5 @@
 ﻿using Assets;
+using InventoryNS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ public class InputController : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] float scanRadius;
     [SerializeField] private LayerMask interactables;
+    [SerializeField] private UI_Inventory inventory;
+    private float _lastInventoryOpen;
 
     // Update is called once per frame
     void LateUpdate()
@@ -18,6 +21,12 @@ public class InputController : MonoBehaviour
         if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             player.Move(_camera.ScreenPointToRay(Input.mousePosition));
+        }
+
+        if (Input.GetKey(KeyCode.I) && Time.time - _lastInventoryOpen > 0.25f)
+        {
+            inventory.Enable();
+            _lastInventoryOpen = Time.time;
         }
     }
 }
