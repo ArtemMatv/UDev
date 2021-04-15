@@ -18,10 +18,10 @@ namespace InventoryNS
         [SerializeField] private GameObject image;
         private Inventory inventory;
         private List<InventoryItem> inventoryEquipment;
-        private ItemUIController[] items;
-        private EquipmentUIController[] equipments;
+        private IItemUIController[] items;
+        private IItemUIController[] equipments;
 
-        private ItemUIController movable;
+        private IItemUIController movable;
         private void Awake()
         {
             inventory = playerController.GetInventory();
@@ -33,6 +33,7 @@ namespace InventoryNS
             ItemRevertDrag img = image.GetComponent<ItemRevertDrag>();
             img.RightClick += RightClick;
             img.LeftClick += ChangePosition;
+            img.LeftClickAboveEquipment += ChangeEquipment;
             img.DropItem += DropItem;
 
             for (int i = 0; i < items.Length; i++)
@@ -47,7 +48,37 @@ namespace InventoryNS
             foreach (var item in equipments)
             {
                 item.OnRightClick += OnEquipmentRightClick;
+                item.OnLeftClick += OnEquipmentLeftClick;
+                img.RightClick += item.BackBackground;
             }
+        }
+
+        private void OnEquipmentLeftClick(IItemUIController obj)
+        {
+            movable = obj;
+            if (obj == null)
+                image.SetActive(false);
+
+            if (obj?.GetItem() != null)
+            {
+                image.SetActive(true);
+                image.GetComponent<Image>().sprite = obj.GetItem().Item.InventoryIcon;
+            }
+        }
+
+        private void ChangeEquipment(EquipmentUIController obj)
+        {
+            if (obj != null)
+                if (((Equipment)movable?.GetItem().Item).Type == obj.EquipmentType)
+                {
+                    if (obj.GetItem() != null && inventory.Robe(movable.GetItem())
+                        || obj.GetItem() != null && inventory.Robe(obj.GetItem())
+                        || movable.GetItem().Use())
+                    {
+                        DrawInventory();
+                        LeftClick(null);
+                    }
+                }
         }
 
         private void OnEquipmentRightClick(InventoryItem obj)
@@ -58,7 +89,7 @@ namespace InventoryNS
 
         private void DropItem()
         {
-            inventory.RemoveItem(movable.Item);
+            inventory.RemoveItem(movable.GetItem());
             movable.SetItem(null);
             LeftClick(null);
         }
@@ -74,21 +105,27 @@ namespace InventoryNS
             if (obj == null)
                 return;
 
-            if (obj.Item == null)
+            if (obj.GetItem() == null)
             {
-                obj.SetItem(movable.Item);
+                if (movable is EquipmentUIController)
+                    inventory.Unrobe(movable.GetItem(), obj.Position);
+
+                obj.SetItem(movable.GetItem());
                 movable.SetItem(null);
                 LeftClick(null);
             }
-            else if (obj.Item == movable.Item)
+            else if (obj.GetItem() == movable.GetItem())
             {
                 LeftClick(null);
                 obj.BackBackground();
             }
             else
             {
-                var objItem = obj.Item;
-                var movableItem = movable.Item;
+                if (movable is EquipmentUIController)
+                    inventory.Unrobe(movable.GetItem(), obj.Position);
+
+                var objItem = obj.GetItem();
+                var movableItem = movable.GetItem();
                 obj.SetItem(null);
                 movable.SetItem(null);
                 obj.SetItem(movableItem);
@@ -105,14 +142,18 @@ namespace InventoryNS
             item2 = temp;
         }
 
-        private void LeftClick(ItemUIController obj)
+        private void LeftClick(IItemUIController obj)
         {
             movable = obj;
             if (obj == null)
-                image.transform.position = new Vector3(1500, 0, 0);
+                image.SetActive(false);
 
-            if (obj?.Item != null)
-                image.GetComponent<Image>().sprite = obj.Item.Item.InventoryIcon;
+            if (obj?.GetItem() != null)
+            {
+                image.SetActive(true);
+                image.GetComponent<Image>().sprite = obj.GetItem().Item.InventoryIcon;
+            }
+
         }
 
         private void RightClick()
@@ -125,7 +166,7 @@ namespace InventoryNS
 
         private void Update()
         {
-            if (movable?.Item != null)
+            if (movable?.GetItem() != null)
                 image.transform.position = Input.mousePosition;
         }
 
@@ -157,7 +198,7 @@ namespace InventoryNS
 
             foreach (InventoryItem item in inventoryEquipment)
             {
-                equipments.First(el => el.EquipmentType == ((Equipment)item.Item).Type).SetItem(item);
+                equipments.First(el => (el as EquipmentUIController).EquipmentType == ((Equipment)item.Item).Type).SetItem(item);
             }
         }
     }

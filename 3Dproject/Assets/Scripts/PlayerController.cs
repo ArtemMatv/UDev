@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private void DropItem(InventoryItem obj)
     {
-        var item = Resources.Load("Prefabs/weapon_" + obj.Item.ItemId) as GameObject;
+        var item = Resources.Load("Prefabs/" + obj.Item.ItemId) as GameObject;
 
         item.GetComponent<Item>()._item = obj;
 

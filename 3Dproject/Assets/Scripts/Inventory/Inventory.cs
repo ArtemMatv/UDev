@@ -24,8 +24,7 @@ namespace InventoryNS
             if (!(item.Item is Equipment))
                 return false;
 
-            var equipmentItem = item.Item as Equipment;
-            var itemEq = equipment.Find(el => ((Equipment)el.Item).Type == equipmentItem.Type);
+            var itemEq = equipment.Find(el => ((Equipment)el.Item).Type == (item.Item as Equipment).Type);
 
             if (itemEq == null)
             {
@@ -91,9 +90,41 @@ namespace InventoryNS
 
         }
 
+        internal bool Robe(InventoryItem item)
+        {
+            if (!(item.Item is Equipment))
+                return false;
+
+            if (equipment.Contains(item))
+                return true;
+            else
+                return SetEquipment(item);
+        }
+
+        internal bool Unrobe(InventoryItem item, int position = -1)
+        {
+            if(!(item.Item is Equipment))
+                return false;
+
+            if (equipment.Contains(item))
+            {
+                equipment.Remove(item);
+
+                if (position == -1)
+                    position = FindPosition();
+
+                item.Position = position;
+                inventory.Add(item);
+                return true;
+            }
+            else
+                return false;
+        }
+
         public void RemoveItem(InventoryItem item)
         {
             inventory.Remove(item);
+            equipment.Remove(item);
             item.Owner = null;
             Dropped(item);
         }

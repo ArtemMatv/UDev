@@ -12,6 +12,7 @@ public class ItemRevertDrag : MonoBehaviour, IPointerClickHandler
     public Action RightClick { get; set; }
     public Action DropItem { get; set; }
     public Action<ItemUIController> LeftClick { get; set; }
+    public Action<EquipmentUIController> LeftClickAboveEquipment { get; set; }
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -21,7 +22,12 @@ public class ItemRevertDrag : MonoBehaviour, IPointerClickHandler
         {
             var result = Physics2D.Raycast(Input.mousePosition, new Vector3(0, 0, 1));
             ItemUIController item = result.collider?.gameObject.GetComponent<ItemUIController>();
-            LeftClick(item);
+            if (item != null)
+                LeftClick(item);
+
+            EquipmentUIController equipment = result.collider?.gameObject.GetComponent<EquipmentUIController>();
+            if (equipment != null)
+                LeftClickAboveEquipment(equipment);
 
             if (item == null)
             {

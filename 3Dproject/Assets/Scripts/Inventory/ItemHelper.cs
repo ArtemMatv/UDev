@@ -16,6 +16,9 @@ namespace InventoryNS
         Cuirass = 6,
         Katana = 7,
         Axe = 8,
+        Boots = 9,
+        GordeousShield = 10,
+        SuperLeggins = 11
     }
 
     [Serializable]

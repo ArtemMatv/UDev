@@ -7,13 +7,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.PointerEventData;
 
-public class ItemUIController : MonoBehaviour, IPointerClickHandler
+public class ItemUIController : MonoBehaviour, IItemUIController
 {
     [SerializeField] private Image background;
     [SerializeField] private Sprite defaultBackground;
     public int Position { get; set; }
-    public InventoryItem Item;
-    public Action<ItemUIController> OnLeftClick { get; set; }
+    private InventoryItem Item;
+    public Action<IItemUIController> OnLeftClick { get; set; }
     public Action<InventoryItem> OnRightClick { get; set; }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -30,7 +30,7 @@ public class ItemUIController : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    internal void SetItem(InventoryItem item, bool updateBG = true)
+    public void SetItem(InventoryItem item, bool updateBG = true)
     {
         if (item == null)
         {
@@ -53,5 +53,10 @@ public class ItemUIController : MonoBehaviour, IPointerClickHandler
             background.sprite = Item.Item.InventoryIcon;
         else
             background.sprite = defaultBackground;
+    }
+
+    public InventoryItem GetItem()
+    {
+        return Item;
     }
 }
