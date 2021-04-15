@@ -6,6 +6,7 @@ using Assets;
 using UnityEngine.EventSystems;
 using InventoryNS;
 using Assets.Interactables;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,7 +20,20 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         inventory = new Inventory(_inventoryCapacity);
+        inventory.Dropped += DropItem;
     }
+
+    private void DropItem(InventoryItem obj)
+    {
+        var item = Resources.Load("Prefabs/weapon_" + obj.Item.ItemId) as GameObject;
+
+        item.GetComponent<Item>()._item = obj;
+
+        Instantiate(item,
+            new Vector3(transform.position.x, 0.13f, transform.position.z),
+            Quaternion.Euler(0,0,-90));
+    }
+
     void Update()
     {
         if (_agent.remainingDistance <= _agent.stoppingDistance)

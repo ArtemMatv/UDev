@@ -15,6 +15,7 @@ namespace InventoryNS
         SimpleHelmet = 5,
         Cuirass = 6,
         Katana = 7,
+        Axe = 8,
     }
 
     [Serializable]
@@ -44,5 +45,6 @@ namespace InventoryNS
         Helmet,
         Chest,
         Leggins,
+        Boots
     }
 }

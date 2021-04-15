@@ -6,20 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Interactables
 {
     class Item : MonoBehaviour, IInteractable
     {
-        [SerializeField] private Canvas canvas;
-        [SerializeField] private Button _button;
-        [SerializeField] private TMP_Text _buttonText;
-        [SerializeField] private TMP_Text _message;
-        [SerializeField] private float _radius;
-        [SerializeField] private InventoryItem _item;
+        private MessageController controller;
+        private float _radius;
+        public InventoryItem _item;
         public Inventory PickUpTarget { private get; set; }
 
+        void Start()
+        {
+            _radius = 1;
+            controller = MessageController.GetInstance();
+        }
         public float GetRadius()
         {
             return _radius;
@@ -27,23 +28,11 @@ namespace Assets.Interactables
 
         public void Interact()
         {
-            Time.timeScale = 0;
-
-            _message.text = "Great sword!!!";
-
-            _buttonText.text = "Take";
-
-            _button.onClick.AddListener(OnClickListener);
-
-            canvas.gameObject.SetActive(true);
+            controller.Show(_item.Item.ItemId.ToString(), "Take", OnClickListener);
         }
 
         void OnClickListener()
         {
-            canvas.gameObject.SetActive(false);
-            Time.timeScale = 1;
-            _button.onClick.RemoveAllListeners();
-
             if (PickUpTarget.AddToInventory(_item))
                 Destroy(gameObject);
         }

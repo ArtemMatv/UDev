@@ -11,35 +11,22 @@ namespace InventoryNS
     public class InventoryItem
     {
         [SerializeField] protected ItemBase _item;
-
+        public int Position { get; set; }
         public ItemBase Item => _item;
         public Inventory Owner { get; set; }
 
-        public virtual void Use()
+        public bool Use()
         {
-            Debug.Log("InventoryItem");
+            if (_item is Equipment)
+            {
+                return Owner.SetEquipment(this);
+            }
+            return false;
         }
 
         public void Drop()
         {
-
-        }
-    }
-
-    [Serializable]
-    public class InventoryEquipment : InventoryItem
-    {
-        [SerializeField] public new Equipment _item;
-        public InventoryEquipment(Equipment equipment)
-        {
-            _item = equipment;
-        }
-
-        public new Equipment Item => _item;
-        public override void Use()
-        {
-            Debug.Log("InventoryEquipment");
-            Owner.SetEquipment(this);
+            Debug.Log("Drop");
         }
     }
 }

@@ -11,7 +11,6 @@ public class InputController : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private PlayerController player;
     [SerializeField] float scanRadius;
-    [SerializeField] private LayerMask interactables;
     [SerializeField] private UI_Inventory inventory;
     private float _lastInventoryOpen;
 

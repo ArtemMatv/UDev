@@ -9,17 +9,51 @@ namespace InventoryNS
     {
         private readonly int _capacity;
         private readonly List<InventoryItem> inventory;
-
-        private Equipment _weapon;
-        private Equipment _shield;
-        private Equipment _helmet;
-        private Equipment _chest;
-        private Equipment _leggins;
-
+        private readonly List<InventoryItem> equipment;
+        public Action<InventoryItem> Dropped { get; set; }
         public Inventory(int capacity)
         {
             inventory = new List<InventoryItem>();
             _capacity = capacity;
+
+            equipment = new List<InventoryItem>();
+        }
+
+        internal bool SetEquipment(InventoryItem item)
+        {
+            if (!(item.Item is Equipment))
+                return false;
+
+            var equipmentItem = item.Item as Equipment;
+            var itemEq = equipment.Find(el => ((Equipment)el.Item).Type == equipmentItem.Type);
+
+            if (itemEq == null)
+            {
+                equipment.Add(item);
+                inventory.Remove(item);
+                return true;
+            }
+            else if (itemEq != item)
+            {
+                equipment.Remove(itemEq);
+                equipment.Add(item);
+                inventory.Remove(item);
+                itemEq.Position = FindPosition();
+                inventory.Add(itemEq);
+                return true;
+            }
+            else
+            {
+                equipment.Remove(item);
+                item.Position = FindPosition();
+                inventory.Add(item);
+                return true;
+            }
+        }
+
+        internal List<InventoryItem> GetEquipment()
+        {
+            return equipment;
         }
 
         public bool AddToInventory(InventoryItem item)
@@ -28,92 +62,40 @@ namespace InventoryNS
                 return false;
 
             item.Owner = this;
+            item.Position = FindPosition();
             inventory.Add(item);
 
             return true;
         }
 
-        public void SetEquipment(InventoryEquipment item)
+        private int FindPosition()
         {
-            if (item.Owner != this)
-                return;
+            int position = 0;
 
-            switch (item.Item.Type)
+            while (position < inventory.Count)
             {
-                case EquipmentType.Weapon:
-                    if (_weapon == null)
-                    {
-                        _weapon = item.Item;
-                        RemoveItem(item);
-                    }
-                    else
-                    {
-                        RemoveItem(item);
-                        _weapon = item.Item;
-                        AddToInventory(new InventoryEquipment(_weapon));
-                    }
-                    break;
-                case EquipmentType.Shield:
-                    if (_shield == null)
-                    {
-                        _shield = item.Item;
-                        RemoveItem(item);
-                    }
-                    else
-                    {
-                        RemoveItem(item);
-                        _shield = item.Item;
-                        AddToInventory(new InventoryEquipment(_shield));
-                    }
-                    break;
-                case EquipmentType.Helmet:
-                    if (_helmet == null)
-                    {
-                        _helmet = item.Item;
-                        RemoveItem(item);
-                    }
-                    else
-                    {
-                        RemoveItem(item);
-                        _helmet = item.Item;
-                        AddToInventory(new InventoryEquipment(_helmet));
-                    }
-                    break;
-                case EquipmentType.Chest:
-                    if (_chest == null)
-                    {
-                        _chest = item.Item;
-                        RemoveItem(item);
-                    }
-                    else
-                    {
-                        RemoveItem(item);
-                        _chest = item.Item;
-                        AddToInventory(new InventoryEquipment(_chest));
-                    }
-                    break;
-                case EquipmentType.Leggins:
-                    if (_leggins == null)
-                    {
-                        _leggins = item.Item;
-                        RemoveItem(item);
-                    }
-                    else
-                    {
-                        RemoveItem(item);
-                        _leggins = item.Item;
-                        AddToInventory(new InventoryEquipment(_leggins));
-                    }
-                    break;
-                default:
-                    break;
+                int pos = 1;
+                foreach (var item in inventory)
+                {
+                    if (item.Position == position)
+                        break;
+                    pos++;
+                }
+
+                if (pos > inventory.Count)
+                    return position;
+
+                position++;
             }
+            return position;
+
         }
 
-        void RemoveItem(InventoryItem item)
+        public void RemoveItem(InventoryItem item)
         {
             inventory.Remove(item);
             item.Owner = null;
+            Dropped(item);
         }
 
         public IEnumerator<InventoryItem> GetEnumerator()
