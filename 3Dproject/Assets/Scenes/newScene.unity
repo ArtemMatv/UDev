@@ -2190,6 +2190,36 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 139297624}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &853353318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 853353319}
+  m_Layer: 8
+  m_Name: HelmetPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &853353319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853353318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.648, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1717203605}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &889286182
 GameObject:
   m_ObjectHideFlags: 0
@@ -5673,6 +5703,11 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3737968324541305531, guid: b121a50321a77fb4aabcddde0cb90bf5,
+        type: 3}
+      propertyPath: helmetPosition
+      value: 
+      objectReference: {fileID: 853353319}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 1770752276088728210, guid: b121a50321a77fb4aabcddde0cb90bf5, type: 3}
@@ -5702,6 +5737,12 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!4 &1717203605 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1770752276088728211, guid: b121a50321a77fb4aabcddde0cb90bf5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1717203602}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1717203606 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3737968324541305531, guid: b121a50321a77fb4aabcddde0cb90bf5,

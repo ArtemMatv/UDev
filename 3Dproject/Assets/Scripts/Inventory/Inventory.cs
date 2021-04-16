@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Interactables;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace InventoryNS
         private readonly List<InventoryItem> inventory;
         private readonly List<InventoryItem> equipment;
         public Action<InventoryItem> Dropped { get; set; }
+        public Action<GameObject, EquipmentType> ChangeEquipment { get; internal set; }
+
         public Inventory(int capacity)
         {
             inventory = new List<InventoryItem>();
@@ -21,6 +24,8 @@ namespace InventoryNS
 
         internal bool SetEquipment(InventoryItem item)
         {
+            if (item == null)
+                return false;
             if (!(item.Item is Equipment))
                 return false;
 
@@ -30,6 +35,11 @@ namespace InventoryNS
             {
                 equipment.Add(item);
                 inventory.Remove(item);
+
+                var eq = Resources.Load("Prefabs/" + item.Item.ItemId) as GameObject;
+
+                eq.GetComponent<Item>()._item = item;
+                ChangeEquipment(eq, ((Equipment)item.Item).Type);
                 return true;
             }
             else if (itemEq != item)
@@ -39,6 +49,12 @@ namespace InventoryNS
                 inventory.Remove(item);
                 itemEq.Position = FindPosition();
                 inventory.Add(itemEq);
+
+                var eq = Resources.Load("Prefabs/" + item.Item.ItemId) as GameObject;
+
+                eq.GetComponent<Item>()._item = item;
+                ChangeEquipment(eq, ((Equipment)itemEq.Item).Type);
+
                 return true;
             }
             else
@@ -46,6 +62,8 @@ namespace InventoryNS
                 equipment.Remove(item);
                 item.Position = FindPosition();
                 inventory.Add(item);
+
+                ChangeEquipment(null, ((Equipment)itemEq.Item).Type);
                 return true;
             }
         }
@@ -109,12 +127,15 @@ namespace InventoryNS
             if (equipment.Contains(item))
             {
                 equipment.Remove(item);
-
+                
                 if (position == -1)
                     position = FindPosition();
 
                 item.Position = position;
                 inventory.Add(item);
+
+                ChangeEquipment(null, ((Equipment)item.Item).Type);
+
                 return true;
             }
             else
@@ -126,6 +147,7 @@ namespace InventoryNS
             inventory.Remove(item);
             equipment.Remove(item);
             item.Owner = null;
+            ChangeEquipment(null, ((Equipment)item.Item).Type);
             Dropped(item);
         }
 

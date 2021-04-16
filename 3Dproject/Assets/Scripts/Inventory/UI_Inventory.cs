@@ -89,7 +89,7 @@ namespace InventoryNS
 
         private void DropItem()
         {
-            inventory.RemoveItem(movable.GetItem());
+            movable.GetItem().Drop();
             movable.SetItem(null);
             LeftClick(null);
         }

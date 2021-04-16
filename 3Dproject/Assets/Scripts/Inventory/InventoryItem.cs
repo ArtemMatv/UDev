@@ -26,7 +26,7 @@ namespace InventoryNS
 
         public void Drop()
         {
-            Debug.Log("Drop");
+            Owner.RemoveItem(this);
         }
     }
 }

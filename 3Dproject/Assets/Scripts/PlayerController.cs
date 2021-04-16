@@ -13,14 +13,57 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Animator _animator;
     [SerializeField] private int _inventoryCapacity;
+    [SerializeField] private Transform helmetPosition;
+    [SerializeField] private Transform weaponPosition;
     private Inventory inventory;
     private IInteractable focus = null;
-    
+
+    private GameObject helmet;
+    private GameObject weapon;
+
+    internal void SetEquipment(GameObject obj, EquipmentType type)
+    {
+        
+        switch (type)
+        {
+            case EquipmentType.Weapon:
+                if (obj != null)
+                {
+                    weapon = Instantiate(obj,
+                       weaponPosition.position,
+                       Quaternion.Euler(0, 0, -45));
+                    weapon.GetComponent<Item>().EnabledOnScene(false);
+                }
+                else Destroy(weapon);
+                break;
+            case EquipmentType.Shield:
+                break;
+            case EquipmentType.Helmet:
+                if (obj != null)
+                {
+                    helmet = Instantiate(obj,
+                        helmetPosition.position,
+                        Quaternion.Euler(0, 0, -90));
+                    helmet.GetComponent<Item>().EnabledOnScene(false);
+                }
+                else Destroy(helmet);
+                break;
+            case EquipmentType.Chest:
+                break;
+            case EquipmentType.Leggins:
+                break;
+            case EquipmentType.Boots:
+                break;
+            default:
+                break;
+        }
+    }
 
     private void Start()
     {
         inventory = new Inventory(_inventoryCapacity);
         inventory.Dropped += DropItem;
+        inventory.ChangeEquipment += SetEquipment;
     }
 
     private void DropItem(InventoryItem obj)
@@ -31,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
         Instantiate(item,
             new Vector3(transform.position.x, 0.13f, transform.position.z),
-            Quaternion.Euler(0,0,-90));
+            Quaternion.Euler(0, 0, -90));
     }
 
     void Update()
@@ -47,10 +90,15 @@ public class PlayerController : MonoBehaviour
             focus.Interact();
 
             if (focus is Item)
-                (focus as Item).PickUpTarget = inventory;  
-            
+                (focus as Item).PickUpTarget = inventory;
+
             SetFocus(null);
         }
+
+        if (helmet != null)
+            helmet.transform.position = helmetPosition.position;
+        if (weapon != null)
+            weapon.transform.position = weaponPosition.position;
     }
 
     public void Move(Ray ray)

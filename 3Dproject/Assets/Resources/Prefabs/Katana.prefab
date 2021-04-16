@@ -28,10 +28,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d1db902117bbc4d4dbe8a9a00b20675e,
         type: 2}
+    - target: {fileID: 2023672459354908136, guid: 5395bdd1e0d581142ad3694d08f43fdb,
+        type: 3}
+      propertyPath: _item._item
+      value: 
+      objectReference: {fileID: 11400000, guid: d1db902117bbc4d4dbe8a9a00b20675e,
+        type: 2}
     - target: {fileID: 2960608762489163816, guid: 5395bdd1e0d581142ad3694d08f43fdb,
         type: 3}
       propertyPath: m_Name
-      value: OptimizedTree (1)
+      value: Katana
       objectReference: {fileID: 0}
     - target: {fileID: 4837046521308023158, guid: 5395bdd1e0d581142ad3694d08f43fdb,
         type: 3}

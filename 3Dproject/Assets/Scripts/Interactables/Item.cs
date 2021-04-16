@@ -15,6 +15,7 @@ namespace Assets.Interactables
         private float _radius;
         public InventoryItem _item;
         public Inventory PickUpTarget { private get; set; }
+        private bool enabledOnScene = true;
 
         void Start()
         {
@@ -28,7 +29,8 @@ namespace Assets.Interactables
 
         public void Interact()
         {
-            controller.Show(_item.Item.ItemId.ToString(), "Take", OnClickListener);
+            if (enabledOnScene)
+                controller.Show(_item.Item.ItemId.ToString(), "Take", OnClickListener);
         }
 
         void OnClickListener()
@@ -41,6 +43,11 @@ namespace Assets.Interactables
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(gameObject.transform.position, _radius);
+        }
+
+        public void EnabledOnScene(bool enabled)
+        {
+            enabledOnScene = enabled;
         }
     }
 }

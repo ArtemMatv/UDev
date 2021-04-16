@@ -14,7 +14,7 @@ CapsuleCollider:
   m_Height: 14.742586
   m_Direction: 1
   m_Center: {x: -0.07742784, y: 7.371293, z: -0.30755773}
---- !u!114 &280693546
+--- !u!114 &2023672459354908136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,13 +26,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99badfa6facfb1248bc984f41f61ee05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
-  _button: {fileID: 0}
-  _buttonText: {fileID: 0}
-  _message: {fileID: 0}
-  _radius: 1
   _item:
-    _item: {fileID: 0}
+    _item: {fileID: 11400000, guid: 99c4588d9d0d549458babbc0fd847d55, type: 2}
 --- !u!1001 &5675918566154191628
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -118,7 +113,7 @@ PrefabInstance:
     - target: {fileID: 7481279592271516452, guid: b728dcfeeb0a6ed4894d460e83563f47,
         type: 3}
       propertyPath: m_Name
-      value: OptimizedTree Variant
+      value: Axe
       objectReference: {fileID: 0}
     - target: {fileID: 7481279592271516452, guid: b728dcfeeb0a6ed4894d460e83563f47,
         type: 3}
