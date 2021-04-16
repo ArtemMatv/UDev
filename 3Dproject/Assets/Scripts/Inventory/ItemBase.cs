@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace InventoryNS
@@ -50,5 +51,10 @@ namespace InventoryNS
         [SerializeField] private EquipmentType _type;
 
         public EquipmentType Type => _type;
+
+        private void Awake()
+        {
+            EditorUtility.SetDirty(this);
+        }
     }
 }

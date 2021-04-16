@@ -25,9 +25,10 @@ public class EquipmentUIController : MonoBehaviour, IItemUIController
             background.sprite = defaultBackground;
         }
 
-        if (eventData.button == InputButton.Right)
+        else if (eventData.button == InputButton.Right)
         {
-            OnRightClick(Item);
+            if (Item != null)
+                OnRightClick(Item);
         }
     }
 

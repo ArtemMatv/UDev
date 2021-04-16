@@ -26,7 +26,8 @@ public class ItemUIController : MonoBehaviour, IItemUIController
 
         else if (eventData.button == InputButton.Right)
         {
-            OnRightClick(Item);
+            if (Item != null)
+                OnRightClick(Item);
         }
     }
 
