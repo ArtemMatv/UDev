@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
             case EquipmentType.Weapon:
                 if (obj != null)
                 {
+                    Destroy(weapon);
                     weapon = Instantiate(obj,
                        weaponPosition.position,
                        Quaternion.Euler(0, 0, -45));
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
             case EquipmentType.Helmet:
                 if (obj != null)
                 {
+                    Destroy(weapon);
                     helmet = Instantiate(obj,
                         helmetPosition.position,
                         Quaternion.Euler(0, 0, -90));

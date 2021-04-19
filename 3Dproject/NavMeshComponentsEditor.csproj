@@ -622,11 +622,11 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/kvaza/OneDrive/Documents/Unity projects/UDev/UDev/3Dproject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/kvaza/OneDrive/Documents/Unity projects/UDev/UDev/3Dproject/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:/Users/kvaza/OneDrive/Documents/Unity projects/UDev/UDev/3Dproject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/kvaza/OneDrive/Documents/Unity projects/UDev/UDev/3Dproject/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
