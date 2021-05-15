@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Interactables\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Interactables\Item.cs" />
     <Compile Include="Assets\Scripts\Interactables\NPC.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Equipment.cs" />
     <Compile Include="Assets\Scripts\Inventory\EquipmentUIController.cs" />
     <Compile Include="Assets\Scripts\Inventory\IItemUIController.cs" />
     <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />

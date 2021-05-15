@@ -44,17 +44,4 @@ namespace InventoryNS
         public int RequiredLevel => _requiredLevel;
         public Stat[] PrimaryStat => _primaryStat;
     }
-
-    [CreateAssetMenu(fileName = "Equipment", menuName = "Item/Equipment")]
-    public class Equipment : StatItemBase
-    {
-        [SerializeField] private EquipmentType _type;
-
-        public EquipmentType Type => _type;
-
-        private void Awake()
-        {
-            EditorUtility.SetDirty(this);
-        }
-    }
 }
